@@ -124,9 +124,9 @@ t_total = cputime - t_ini;
 if vflag
     fprintf('Total CPU Time: %s\n', t_total);
     fprintf('Obtained compressed file: %s \n', compressed_filename);
-    fprintf('Original size: %d \n', );
-    fprintf('Compressed size: %d \n', );
-    fprintf('RC = %f \n',);
+    fprintf('Original size: %d \n', TO);
+    fprintf('Compressed size: %d \n', TC);
+    fprintf('RC = %f \n', RC);
     fprintf('Finished Default Huffman Compression\n\n');
 end
     

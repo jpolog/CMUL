@@ -1,3 +1,4 @@
 jcom_dflt:
     + Cuándo empiezo a contar el tiempo, antes de leer la imagen o antes de comprimirla??
     + Indicar en algún sitio que las componentes se codifican en binario??
+    + TRADUCIR COMENTARIOS INICIALES

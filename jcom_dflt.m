@@ -16,7 +16,7 @@ function RC = jcom_dflt(fname, caliQ, extension)
 vflag = 1;
 if vflag
 % Display function name
-    fprintf('Compressing %s using default Huffman compression...\n\n', file_name);
+    fprintf('Compressing %s using default Huffman compression...\n\n', fname);
 end
 
 % Get initial time

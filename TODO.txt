@@ -7,3 +7,9 @@ encode_custom: HE TENIDO QUE HACERLO DESDE 0
 
 jcom_custom:
     + Sustituir comentarios iniciales
+
+Cambiar variable fid del fichero por fich o algo así
+Reordenar m,n,mamp,namp al leer y al escribir
+
+
+Obs: lab = Label

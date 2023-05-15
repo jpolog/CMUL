@@ -12,7 +12,7 @@ function RC = jcom_dflt(fname, caliQ, extension)
 % Outputs:
 % RC: Compression ratio
 
-% Verbosity flag (useful when debuging)
+% Verbosity flag
 vflag = 1;
 if vflag
 % Display function name
@@ -112,9 +112,9 @@ fwrite(fid,sbytes_Cr,'uint32');
 fclose(fid);
 
 % Calculamos RC
-TAM_CAB= length(n)+length(namp)+length(m)+length(caliQ)+ length(mamp)+length(namp);
-TAM_DAT=length(sbytes_Y)+ length(sbytes_Cb)+length(sbytes_Cr);
-TC = TAM_CAB + TAM_DAT;
+header_len=length(n)+length(namp)+length(m)+length(mamp)+length(caliQ);
+data_len=length(sbytes_Y)+ length(sbytes_Cb)+length(sbytes_Cr);
+TC = header_len + data_len;
 RC = 100* ((TO-TC)/TO);
 
 % Total time
@@ -124,9 +124,9 @@ t_total = cputime - t_ini;
 if vflag
     fprintf('Total CPU Time: %s\n', t_total);
     fprintf('Obtained compressed file: %s \n', compressed_filename);
-    fprintf('Original size: %d \n', );
-    fprintf('Compressed size: %d \n', );
-    fprintf('RC = %f \n',);
+    fprintf('Original size: %d \n', TO);
+    fprintf('Compressed size: %d \n', TC);
+    fprintf('RC = %f \n', RC);
     fprintf('Finished Default Huffman Compression\n\n');
 end
     

@@ -12,11 +12,11 @@ function RC = jcom_dflt(fname, caliQ, extension)
 % Outputs:
 % RC: Compression ratio
 
-% Verbosity flag (useful when debuging)
+% Verbosity flag
 vflag = 1;
 if vflag
 % Display function name
-fprintf('Compressing %s using default Huffman tables...\n\n', file_name);
+    fprintf('Compressing %s using default Huffman compression...\n\n', file_name);
 end
 
 % Get initial time

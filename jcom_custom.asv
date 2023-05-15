@@ -1,22 +1,25 @@
-function RC = jcom_dflt(fname, caliQ, extension)
+function RC = jcom_custom(fname,caliQ,extension)
 
-% Function: jcom_dflt (Default Huffman table compression)
-% Inputs:
-% fname: String containing the file name, including suffix
-% Accepts BMP and JPEG, indexed and truecolor
-% caliQ: Quality factor (positive integer >= 1)
-% 100: standard quality
-% >100: lower quality
-% <100: higher quality
-% extension: String indicating the file extension, e.g., bmp or png
-% Outputs:
-% RC: Compression ratio
+% jcom_custom: Compresion de imágenes basada en las tablas customizadas
+
+% Entradas:
+%  fname: Un string con nombre de archivo, incluido sufijo
+%         Admite BMP y JPEG, indexado y truecolor
+%  caliQ: Factor de calidad (entero positivo >= 1)
+%         100: calidad estandar
+%         >100: menor calidad
+%         <100: mayor calidad
+%  extension: String que indica la extensión del archivo, en mi caso bmp o
+%  png
+% Salidas:
+%  RC: Relacion de compresion
+
 
 % Verbosity flag
 vflag = 1;
 if vflag
-% Display function name
-    fprintf('Compressing %s using default Huffman compression...\n\n', file_name);
+    % Display function name
+    fprintf('Compressing %s using custom Huffman compression...\n\n', file_name);
 end
 
 % Get initial time
@@ -34,10 +37,12 @@ t_ini=cputime;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Xtrans = perform_dct(Xamp);
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Quantize DCT coefficients %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Xlab=quantmat(Xtrans, caliQ);
+
 
 %%%%%%%%%%%%%%%%%%%%%%
 % Scanning & Encoding%
@@ -46,8 +51,8 @@ Xlab=quantmat(Xtrans, caliQ);
 % (each scan is an mamp x namp matrix)
 XScan=scan(Xlab);
 
-% Encode the three scans using default Huffman tables
-[CodedY,CodedCb,CodedCr]=EncodeScans_dflt(XScan);
+% Encode the three scans using custom Huffman tables
+[CodedY, CodedCb, CodedCr,BITS_Y_DC, HUFFVAL_Y_DC, BITS_Y_AC, HUFFVAL_Y_AC, BITS_C_DC,HUFFVAL_C_DC, BITS_C_AC, HUFFVAL_C_AC] = EncodeScans_custom(XScan);
 
 % Transform obtained Scans tables to bytes and encode them
 %%%%%%%% CodedY %%%%%%%%
@@ -71,6 +76,34 @@ len_sbytes_Cr=uint32(length(sbytes_Cr));
 % convert to int32
 [sbytes_Cr, ultl_Cr] = deal(uint32(sbytes_Cr), uint32(ultl_Cr));
 
+
+% We need to encode the generated Bits and Huffval tables too
+% to store them in the compressed file 
+% LUMINANCE
+% Y_DC
+len_BITS_Y_DC=uint32(length(BITS_Y_DC)); 
+BITS_Y_DC=uint32(BITS_Y_DC); 
+len_HUFFVAL_Y_DC=uint32(length(HUFFVAL_Y_DC));
+HUFFVAL_Y_DC=uint32(HUFFVAL_Y_DC); 
+% Y_AC
+len_BITS_Y_AC=uint32(length(BITS_Y_AC)); 
+BITS_Y_AC=uint32(BITS_Y_AC); 
+len_HUFFVAL_Y_AC=uint32(length(HUFFVAL_Y_AC));
+HUFFVAL_Y_AC=uint32(HUFFVAL_Y_AC); 
+
+% CROMINANCE
+% C_DC
+len_BITS_C_DC=uint32(length(BITS_C_DC)); 
+BITS_C_DC=uint32(BITS_C_DC); 
+len_HUFFVAL_C_DC=uint32(length(HUFFVAL_C_DC));
+HUFFVAL_C_DC=uint32(HUFFVAL_C_DC); 
+% C_AC
+len_BITS_C_AC=uint32(length(BITS_C_AC)); 
+BITS_C_AC=uint32(BITS_C_AC); 
+len_HUFFVAL_C_AC=uint32(length(HUFFVAL_C_AC));
+HUFFVAL_C_AC=uint32(HUFFVAL_C_AC); 
+
+
 % Encode m, n, mamp, namp and caliQ as int32
 m=uint32(m);
 mamp=uint32(mamp);
@@ -90,12 +123,36 @@ compressed_filename = strcat(name, '.hud');
 % Create the compressed file
 fid = fopen(compressed_filename,'w');
 
-% Write
+%%% Write %%%
+% Dimensions + caliQ
 fwrite(fid,n,'uint32');
 fwrite(fid,namp,'uint32');
 fwrite(fid,m,'uint32');
 fwrite(fid,mamp,'uint32');
 fwrite(fid,caliQ,'uint32');
+% Bits & Huffval encoded tables
+% Y_DC
+fwrite(fid,len_BITS_Y_DC,'uint32'); 
+fwrite(fid,BITS_Y_DC,'uint32'); 
+fwrite(fid,len_HUFFVAL_Y_DC,'uint32'); 
+fwrite(fid,HUFFVAL_Y_DC,'uint32');
+% Y_AC
+fwrite(fid,len_BITS_Y_AC,'uint32'); 
+fwrite(fid,BITS_Y_AC,'uint32'); 
+fwrite(fid,len_HUFFVAL_Y_AC,'uint32'); 
+fwrite(fid,HUFFVAL_Y_AC,'uint32');
+% C_DC
+fwrite(fid,len_BITS_C_DC,'uint32'); 
+fwrite(fid,BITS_C_DC,'uint32'); 
+fwrite(fid,len_HUFFVAL_C_DC,'uint32'); 
+fwrite(fid,HUFFVAL_C_DC,'uint32');
+% C_AC
+fwrite(fid,len_BITS_C_AC,'uint32'); 
+fwrite(fid,BITS_C_AC,'uint32'); 
+fwrite(fid,len_HUFFVAL_C_AC,'uint32'); 
+fwrite(fid,HUFFVAL_C_AC,'uint32');
+
+% Now the coded Scans
 % CodedY
 fwrite(fid,len_sbytes_Y,'uint32');
 fwrite(fid,ultl_Y,'uint32');
@@ -112,7 +169,11 @@ fwrite(fid,sbytes_Cr,'uint32');
 fclose(fid);
 
 % RC is calculated
+% header = image sizes + (BITS + HUFFVAL for each luminance/crominance DC/AC)
+% all data is needed for later decompression
+%image sizes
 header_len=length(n)+length(namp)+length(m)+length(mamp)+length(caliQ);
+% BITS + HUFFVAL
 data_len=length(sbytes_Y)+ length(sbytes_Cb)+length(sbytes_Cr);
 TC = header_len + data_len;
 RC = 100* ((TO-TC)/TO);
@@ -129,4 +190,4 @@ if vflag
     fprintf('RC = %f \n', RC);
     fprintf('Finished Default Huffman Compression\n\n');
 end
-    
+

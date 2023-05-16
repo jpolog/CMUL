@@ -9,6 +9,7 @@ function [MSE, RC, SNR] = jdes_dflt(fname, extension, show)
 
 % Open the compressed file
 fid = fopen(fname,'r');
+[XOR, ~, ~, ~, ~, ~, ~, TO] = imlee(archivoOrig);
 
 
 
@@ -93,10 +94,13 @@ TAM_DAT = length(sbytes_Y)+ length(sbytes_Cb)+length(sbytes_Cr);
 TC = TAM_CAB + TAM_DAT;
 
 %Calculamos el MSE
-MSE=(sum(sum(sum((double(Xrec)-double(XOR)).^2))))/(m*n*3);
+% MSE=(sum(sum(sum((double(Xrec)-double(XOR)).^2))))/(m*n*3);
+% sum 3 times to sum in all the dimensions
+MSE = mean((sum(sum(sum((double(Xrec)-double(XOR)).^2)))));
 
 %Calculamos RC
-RC = 100*(TO-TAM_DAT)/TO;
+%%%> Aquí sería TAM_DAT o TC???
+RC = 100*(TO-TC)/TO;
 
 %Calculamos SNR
 SNR = sum(sum(sum(double(XOR).^2)))/(sum(sum(sum((double(Xrec)-double(XOR)).^2))));

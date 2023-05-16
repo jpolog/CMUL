@@ -1,3 +1,54 @@
-../Images/original/bmp_24.bmp,0.10,89.059090,89.059090,0.268100,0.268100
-../Images/original/bmp_24.bmp,0.10,89.059090,89.059090,0.268100,0.268100
-../Images/original/bmp_24.bmp,0.10,89.059090,0.268100,
+CUSTOM
+IMG:../Images/original/Img03.bmp
+	100.00
+	98.404918
+	93.790620
+	22.956112
+	DEFAULT
+IMG:../Images/original/Img03.bmp
+	100.00
+	98.404918
+	93.699588
+	22.956112
+	
+
+
+---------------------------
+
+
+CUSTOM
+IMG:../Images/original/Img03.bmp
+	100.00
+	98.404918
+	93.790620
+	22.956112
+	DEFAULT
+IMG:../Images/original/Img03.bmp
+	100.00
+	98.404918
+	93.699588
+	22.956112
+	
+
+
+---------------------------
+
+
+CUSTOM
+IMG:../Images/original/Img03.bmp
+	100.00
+	98.404918
+	93.850078
+	22.956112
+	DEFAULT
+IMG:../Images/original/Img03.bmp
+	100.00
+	98.404918
+	93.699588
+	22.956112
+	
+
+
+---------------------------
+
+

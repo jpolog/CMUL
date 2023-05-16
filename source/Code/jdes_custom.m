@@ -15,12 +15,12 @@ end
 
 % Paths to original and decoded images
 orig_filepath = '../Images/original/'; 
-dec_filepath = '../Images/decoded_dflt/';
-enc_filepath = '../Images/encoded_dflt/';  
+dec_filepath = '../Images/decoded_custom/';
+enc_filepath = '../Images/encoded_custom/';  
 
 % Open the compressed file
 [~, basename, ~] = fileparts(fname);
-name = strcat(enc_filepath, basename,'_enc_dflt.hud');
+name = strcat(enc_filepath, basename,'_enc_custom.hud');
 enc_fid = fopen(name, 'r');
 
 % Verbosity flag
@@ -59,18 +59,18 @@ HUFFVAL_C_AC = double(fread(enc_fid, len_HUFFVAL_C_AC, 'uint32'));
 % Read the 3 compressed channels
 % CodedY
 len_sbytes_Y = fread(enc_fid, 1, 'uint32');
-ultl_Y = fread(enc_fid, 1, 'uint32');
 sbytes_Y = fread(enc_fid, len_sbytes_Y, 'uint32');
+ultl_Y = fread(enc_fid, 1, 'uint32');
 CodedY = bytes2bits(double(sbytes_Y), double(ultl_Y));
 % CodedCb
 len_sbytes_Cb = fread(enc_fid, 1, 'uint32');
-ultl_Cb = fread(enc_fid, 1, 'uint32');
 sbytes_Cb = fread(enc_fid, len_sbytes_Cb, 'uint32');
+ultl_Cb = fread(enc_fid, 1, 'uint32');
 CodedCb = bytes2bits(double(sbytes_Cb), double(ultl_Cb));
 % CodedCr
 len_sbytes_Cr = fread(enc_fid, 1, 'uint32');
-ultl_Cr = fread(enc_fid, 1, 'uint32');
 sbytes_Cr = fread(enc_fid, len_sbytes_Cr, 'uint32');
+ultl_Cr = fread(enc_fid, 1, 'uint32');
 CodedCr = bytes2bits(double(sbytes_Cr), double(ultl_Cr));
 
 % Close the file
@@ -128,13 +128,13 @@ orig_file = strcat(orig_filepath, basename, '.bmp');
 
 % Calculate MSE
 % mean across all 3 dimensions
-MSE = mean((double(Xrec) - double(Xorigig)).^2, [1 2 3]);
+MSE = mean((double(Xrec) - double(Xorig)).^2, [1 2 3]);
 
 % Calculate Compression Ratio (RC)
 RC = 100 * (TO - TC) / TO;
 
 % Calculate SNR (Signal-to-Noise Ratio)
-SNR = 10 * log10(sum(double(Xorigig).^2, [1 2 3]) / sum((double(Xrec) - double(Xorigig)).^2, [1 2 3]));
+SNR = 10 * log10(sum(double(Xorig).^2, [1 2 3]) / sum((double(Xrec) - double(Xorig)).^2, [1 2 3]));
 
 
 % Visual test

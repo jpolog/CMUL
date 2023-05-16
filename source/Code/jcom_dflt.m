@@ -98,16 +98,16 @@ fid = fopen(encoded_file, 'w');
 fwrite(fid, [m n mamp namp caliQ], 'uint32');
 % CodedY
 fwrite(fid, len_sbytes_Y, 'uint32');
-fwrite(fid, ultl_Y, 'uint32');
 fwrite(fid, sbytes_Y, 'uint32');
+fwrite(fid, ultl_Y, 'uint32');
 % CodedCb
 fwrite(fid, len_sbytes_Cb, 'uint32');
-fwrite(fid, ultl_Cb, 'uint32');
 fwrite(fid, sbytes_Cb, 'uint32');
+fwrite(fid, ultl_Cb, 'uint32');
 % CodedCr
 fwrite(fid, len_sbytes_Cr, 'uint32');
-fwrite(fid, ultl_Cr, 'uint32');
 fwrite(fid, sbytes_Cr, 'uint32');
+fwrite(fid, ultl_Cr, 'uint32');
 % Close file
 fclose(fid);
 

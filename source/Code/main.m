@@ -1,3 +1,4 @@
+close all
 clear
 clc
 
@@ -5,8 +6,8 @@ addpath('./auxiliar');
 
 % Define the list of images and caliQ to test
 %images = {'images/lena.bmp', 'images/lennon.bmp', 'images/cshapes.bmp'};
-images = ["../Images/original/bmp_24.bmp"];
-caliQ = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6];
+images = ["../Images/original/Img03.bmp"];
+caliQ = [100];
 
 % Loop through each image and compression level, and compute the compression rate and mean squared error
 for img = images
@@ -16,7 +17,7 @@ for img = images
         % time the whole process
         t_ini = cputime;
         % Compress the image
-        jcom_custom(img, caliQ);
+        jcom_custom(img, caliQ(j));
         % Decompress the image
         [MSE_C, RC_C, SNR_C] = jdes_custom(img);
         % Total CPU time
@@ -28,7 +29,7 @@ for img = images
         % time the whole process
         t_ini = cputime;
         % Compress the image
-        jcom_dflt(img, caliQ);
+        jcom_dflt(img, caliQ(j));
         % Decompress the image
         [MSE_D, RC_D, SNR_D] = jdes_dflt(img);
         % Total CPU time
@@ -37,9 +38,11 @@ for img = images
         
         % Write the results to a file
         fid = fopen('results.txt', 'a');
-        fprintf(fid, '%s,%.2f,%f,%f,%f,%f\n', img, caliQ(j),MSE_C, RC_C, SNR_C);
-        fprintf(fid, '%s,%.2f,%f,%f,%f,%f\n', img, caliQ(j),MSE_D, RC_D, SNR_D);
-        fprintf(fid, '---------------------------\n\n\n');
+        fprintf(fid,'CUSTOM\n');
+        fprintf(fid, 'IMG:%s\n\t%.2f\n\t%f\n\t%f\n\t%f\n\t%f\n', img, caliQ(j),MSE_C, RC_C, SNR_C);
+        fprintf(fid,'DEFAULT\n');
+        fprintf(fid, 'IMG:%s\n\t%.2f\n\t%f\n\t%f\n\t%f\n\t%f\n', img, caliQ(j),MSE_D, RC_D, SNR_D);
+        fprintf(fid, '\n\n\n---------------------------\n\n\n');
         fclose(fid);
         
     end

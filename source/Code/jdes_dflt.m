@@ -36,20 +36,20 @@ params = fread(enc_fid, 5, 'uint32');
 
 % CodedY
 len_sbytes_Y = fread(enc_fid, 1, 'uint32');
-ultl_Y = fread(enc_fid, 1, 'uint32');
 sbytes_Y = fread(enc_fid, len_sbytes_Y, 'uint32');
+ultl_Y = fread(enc_fid, 1, 'uint32');
 CodedY = bytes2bits(double(sbytes_Y), double(ultl_Y));
 
 % CodedCb
 len_sbytes_Cb = fread(enc_fid, 1, 'uint32');
-ultl_Cb = fread(enc_fid, 1, 'uint32');
 sbytes_Cb = fread(enc_fid, len_sbytes_Cb, 'uint32');
+ultl_Cb = fread(enc_fid, 1, 'uint32');
 CodedCb = bytes2bits(double(sbytes_Cb), double(ultl_Cb));
 
 % CodedCr
 len_sbytes_Cr = fread(enc_fid, 1, 'uint32');
-ultl_Cr = fread(enc_fid, 1, 'uint32');
 sbytes_Cr = fread(enc_fid, len_sbytes_Cr, 'uint32');
+ultl_Cr = fread(enc_fid, 1, 'uint32');
 CodedCr = bytes2bits(double(sbytes_Cr), double(ultl_Cr));
 
 % Close the file

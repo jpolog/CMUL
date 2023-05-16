@@ -1,16 +1,3 @@
-jcom_dflt:
-    + Cuándo empiezo a contar el tiempo, antes de leer la imagen o antes de comprimirla??
-    + Indicar en algún sitio que las componentes se codifican en binario??
-    + TRADUCIR COMENTARIOS INICIALES
-
-encode_custom: HE TENIDO QUE HACERLO DESDE 0
-
-jcom_custom:
-    + Sustituir comentarios iniciales
-
-DecodeScans_custom:
-    + Arreglar comentarios
-
 jdes_custom & jdes_dflt:
     + al LEER del fichero comprimido, se tiene que leer como double()? o se lee normal??
     + Alomejor aquí si que hay que distinguir entre lo que leemos normal y el double REVISAR CÁLCULOS DEL HEADER
@@ -23,3 +10,5 @@ Reordenar m,n,mamp,namp al leer y al escribir
 
 
 Obs: lab = Label
+
+CAMBIAR DECOMPRESS POR DECODE????? (CREO QUE NO)!!!!!

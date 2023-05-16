@@ -9,13 +9,19 @@ function [MSE, RC, SNR] = jdes_dflt(fname, extension, show)
 % RC: Compression ratio
 % SNR: Signal-to-Noise Ratio
 
+if nargin < 3
+    show = true;
+end
+    
+
 % Paths to original and decoded images
-orig_filepath = '../original/'; 
-dec_filepath = '../decoded_dflt/';
+orig_filepath = '../Images/original/'; 
+dec_filepath = '../Images/decoded_dflt/';
+enc_filepath = '../Images/encoded_dflt/';  
 
 % Open the compressed file
 [~, basename, ~] = fileparts(fname);
-name = strcat(basename,'_enc_dflt.hud');
+name = strcat(enc_filepath, basename,'_enc_dflt.hud');
 enc_fid = fopen(name, 'r');
 
 % Verbosity flag
@@ -25,20 +31,24 @@ if vflag
 end
 
 % Read the parameters of the original image
-[m, n, mamp, namp, caliQ] = fread(enc_fid, 5, 'uint32');
+params = fread(enc_fid, 5, 'uint32');
+[m, n, mamp, namp, caliQ] = deal(params(1),params(2),params(3),params(4),params(5));
 
 % CodedY
-[len_sbytes_Y, ultl_Y] = fread(enc_fid, 2, 'uint32');
+len_sbytes_Y = fread(enc_fid, 1, 'uint32');
+ultl_Y = fread(enc_fid, 1, 'uint32');
 sbytes_Y = fread(enc_fid, len_sbytes_Y, 'uint32');
 CodedY = bytes2bits(double(sbytes_Y), double(ultl_Y));
 
 % CodedCb
-[len_sbytes_Cb, ultl_Cb] = fread(enc_fid, 2, 'uint32');
+len_sbytes_Cb = fread(enc_fid, 1, 'uint32');
+ultl_Cb = fread(enc_fid, 1, 'uint32');
 sbytes_Cb = fread(enc_fid, len_sbytes_Cb, 'uint32');
 CodedCb = bytes2bits(double(sbytes_Cb), double(ultl_Cb));
 
 % CodedCr
-[len_sbytes_Cr, ultl_Cr] = fread(enc_fid, 2, 'uint32');
+len_sbytes_Cr = fread(enc_fid, 1, 'uint32');
+ultl_Cr = fread(enc_fid, 1, 'uint32');
 sbytes_Cr = fread(enc_fid, len_sbytes_Cr, 'uint32');
 CodedCr = bytes2bits(double(sbytes_Cr), double(ultl_Cr));
 

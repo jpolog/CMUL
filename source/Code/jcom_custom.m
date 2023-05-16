@@ -36,7 +36,7 @@ t_ini = cputime;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Compute 2D DCT (blocks of 8x8 px) %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Xtrans = perform_dct(Xamp);
+Xtrans = imdct(Xamp);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Quantize DCT coefficients %

@@ -9,6 +9,10 @@ Cambiar variable fid del fichero por fich o algo así
 Reordenar m,n,mamp,namp al leer y al escribir
 
 
+Decompress:
+    + Arreglar el número de argumentos y si sirve para algo demás del nombre
+
+
 Obs: lab = Label
 
 CAMBIAR DECOMPRESS POR DECODE????? (CREO QUE NO)!!!!!

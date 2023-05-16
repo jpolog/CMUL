@@ -25,7 +25,7 @@ t_ini = cputime;
 % Construct Huffman tables for luminance and chrominance
 % Luminance tables
 % Y_DC table
-% First, create the Huffman code table and then the decoding table.
+% Create the Huffman code table and decoding table.
 [HUFFSIZE_Y_DC, HUFFCODE_Y_DC] = HCodeTables(BITS_Y_DC, HUFFVAL_Y_DC);
 [MINCO_Y_DC, MAXCO_Y_DC, VALPTR_Y_DC] = HDecodingTables(BITS_Y_DC, HUFFCODE_Y_DC);
 
@@ -38,7 +38,7 @@ YRec = DecodeSingleScan(CodedY, MINCO_Y_DC, MAXCO_Y_DC, VALPTR_Y_DC, HUFFVAL_Y_D
 
 % Chrominance tables
 % C_DC and C_AC tables
-% First, create the Huffman code table and then the decoding table.
+% Create the Huffman code table and decoding table.
 [HUFFSIZE_C_DC, HUFFCODE_C_DC] = HCodeTables(BITS_C_DC, HUFFVAL_C_DC);
 [MINCO_C_DC, MAXCO_C_DC, VALPTR_C_DC] = HDecodingTables(BITS_C_DC, HUFFCODE_C_DC);
 
@@ -56,7 +56,7 @@ XScanrec = cat(3, YRec, CBRec, CRRec);
 t_total = cputime - t_ini;
 
 if vflag
-    fprintf('Scans have been decoded\n')
-    fprintf('Total CPU Time: %s\n', t_total);
-    fprintf('DecodeScans_custom finished\n');
+fprintf('Scans have been decoded\n')
+fprintf('Total CPU Time: %s\n', t_total);
+fprintf('DecodeScans_custom finished\n');
 end

@@ -8,12 +8,16 @@ encode_custom: HE TENIDO QUE HACERLO DESDE 0
 jcom_custom:
     + Sustituir comentarios iniciales
 
+DecodeScans_custom:
+    + Arreglar comentarios
+
 jdes_custom & jdes_dflt:
     + al LEER del fichero comprimido, se tiene que leer como double()? o se lee normal??
     + Alomejor aquí si que hay que distinguir entre lo que leemos normal y el double
 
 Cambiar variable fid del fichero por fich o algo así
 Reordenar m,n,mamp,namp al leer y al escribir
+Cambiar CodedY por coded_Y, etc.
 
 
 Obs: lab = Label

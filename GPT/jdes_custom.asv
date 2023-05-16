@@ -92,8 +92,7 @@ imwrite(Xrec, [fname, '.', extension]);
 % Calculate header length and total compressed data length
 % Note:
 % first elements of the header are n,m,mamp,namp,caliQ = 5 elem * 4 bytes
-% Then for each header value we have the length (4 bytes) and the 
-% actual size (length * 4 bytes)
+% Then for each element (4 bytes
 header_len = 4 * 5 + (1 + len_BITS_Y_DC) * 4 + (1 + len_HUFFVAL_Y_DC) * 4 ...
 + (1 + len_BITS_Y_AC) * 4 + (1 + len_HUFFVAL_Y_AC) * 4 ...
 + (1 + len_BITS_C_DC) * 4 + (1 + len_HUFFVAL_C_DC) * 4 ...

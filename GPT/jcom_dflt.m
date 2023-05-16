@@ -99,13 +99,13 @@ fwrite(comp_fich, len_sbytes_Y, 'uint32');
 fwrite(comp_fich, ultl_Y, 'uint32');
 fwrite(comp_fich, sbytes_Y, 'uint32');
 % CodedCb
-fwrite(comp_fich, len_sbytes_Cb, 'uint32'); 
-fwrite(comp_fich, ultl_Cb, 'uint32'); 
-fwrite(comp_fich, sbytes_Cb, 'uint32'); 
+fwrite(comp_fich, len_sbytes_Cb, 'uint32');
+fwrite(comp_fich, ultl_Cb, 'uint32');
+fwrite(comp_fich, sbytes_Cb, 'uint32');
 % CodedCr
-fwrite(comp_fich, len_sbytes_Cr, 'uint32'); 
-fwrite(comp_fich, ultl_Cr, 'uint32'); 
-fwrite(comp_fich, sbytes_Cr, 'uint32'); 
+fwrite(comp_fich, len_sbytes_Cr, 'uint32');
+fwrite(comp_fich, ultl_Cr, 'uint32');
+fwrite(comp_fich, sbytes_Cr, 'uint32');
 % Close file
 fclose(comp_fich);
 

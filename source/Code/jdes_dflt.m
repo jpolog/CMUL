@@ -17,21 +17,17 @@ end
 % Paths to original and decoded images
 orig_filepath = '../Images/original/'; 
 dec_filepath = '../Images/decoded_dflt/';
-enc_filepath = '../Images/encoded_dflt/';  
 
 % Open the compressed file
 [~, name, ~] = fileparts(fname);
 tmp = strsplit(name, "_Q");
-basename = tmp(0);
-tmp = strsplit(tmp, "_");
-caliQ = tmp(0);
-name = strcat(enc_filepath, basename,'_Q',int2str(caliQ),'_enc_dflt.hud');
-enc_fid = fopen(name, 'r');
+basename = tmp(1); % used to open original file + generate decompressed file
+enc_fid = fopen(fname, 'r');
 
 % Verbosity flag
 vflag = 1;
 if vflag
-    fprintf('Decompressing %s using default Huffman tables...\n\n', name);
+    fprintf('Decompressing %s using default Huffman tables...\n\n', fname);
 end
 
 % Read the parameters of the original image
@@ -86,7 +82,7 @@ Xrec_rgb = uint8(round(ycbcr2rgb(Xamprec / 255) * 255)); % Recovered image
 Xrec = Xrec_rgb(1:m, 1:n, :);
 
 % Generate decompressed file
-dec_file = strcat(dec_filepath, basename,'_Q',int2str(caliQ),'_dec_dflt', '.bmp');
+dec_file = strcat(dec_filepath, basename,'_Q',num2str(caliQ),'_dec_dflt', '.bmp');
 % Save the decompressed file
 imwrite(Xrec, dec_file);
 

@@ -16,21 +16,17 @@ end
 % Paths to original and decoded images
 orig_filepath = '../Images/original/'; 
 dec_filepath = '../Images/decoded_custom/';
-enc_filepath = '../Images/encoded_custom/';  
 
 % Open the compressed file
 [~, name, ~] = fileparts(fname);
 tmp = strsplit(name, "_Q");
-basename = tmp(0);
-tmp = strsplit(tmp, "_");
-caliQ = tmp(0);
-name = strcat(enc_filepath, basename,'_Q',int2str(caliQ),'_enc_custom.hud');
-enc_fid = fopen(name, 'r');
+basename = tmp(1); % used to open original file + generate decompressed file
+enc_fid = fopen(fname, 'r');
 
 % Verbosity flag
 vflag = 1;
 if vflag
-    fprintf('Decompressing %s using custom Huffman tables...\n\n', name);
+    fprintf('Decompressing %s using custom Huffman tables...\n\n', fname);
 end
 
 % Read the parameters of the original image
@@ -89,7 +85,7 @@ XScanrec = DecodeScans_custom(CodedY, CodedCb, CodedCr, [mamp namp], ...
 Xlabrec = invscan(XScanrec);
 
 % Dequantize labels
-Xtransrec = desquantmat(Xlabrec, int2str(caliQ));
+Xtransrec = desquantmat(Xlabrec, caliQ);
 
 % Perform 2D iDCT on 8x8 pixel blocks
 Xamprec = imidct(Xtransrec, m, n);
@@ -106,7 +102,7 @@ Xrec_rgb = uint8(round(ycbcr2rgb(Xamprec / 255) * 255));
 Xrec = Xrec_rgb(1:m, 1:n, 1:3);
 
 % Generate decompressed file
-dec_file = strcat(dec_filepath, basename,'_Q',caliQ, '_dec_custom', '.bmp');
+dec_file = strcat(dec_filepath, basename,'_Q',num2str(caliQ), '_dec_custom', '.bmp');
 % Save the decompressed file
 imwrite(Xrec, dec_file);
 

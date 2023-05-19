@@ -24,7 +24,7 @@ end
 enc_filepath = '../Images/encoded_custom/';  
 % Generate compressed file name (.hud extension)
 [~, basename, ~] = fileparts(fname);
-encoded_file = strcat(enc_filepath, basename,'_Q',int2str(caliQ),'_enc_custom.hud');
+encoded_file = strcat(enc_filepath, basename,'_Q',num2str(caliQ),'_enc_custom.hud');
 
 % Get initial CPU time
 t_ini = cputime;

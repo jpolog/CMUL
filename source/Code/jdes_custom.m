@@ -1,4 +1,4 @@
-function [MSE, RC, SNR] = jdes_custom(fname, extension, show)
+function [MSE, RC, SNR] = jdes_custom(fname, show)
 % Function: jdes_custom (Custom Huffman table decompression)
 % Inputs:
 % fname: String containing the file name, including suffix
@@ -19,8 +19,12 @@ dec_filepath = '../Images/decoded_custom/';
 enc_filepath = '../Images/encoded_custom/';  
 
 % Open the compressed file
-[~, basename, ~] = fileparts(fname);
-name = strcat(enc_filepath, basename,'_enc_custom.hud');
+[~, name, ~] = fileparts(fname);
+tmp = strsplit(name, "_Q");
+basename = tmp(0);
+tmp = strsplit(tmp, "_");
+caliQ = tmp(0);
+name = strcat(enc_filepath, basename,'_Q',int2str(caliQ),'_enc_custom.hud');
 enc_fid = fopen(name, 'r');
 
 % Verbosity flag
@@ -85,7 +89,7 @@ XScanrec = DecodeScans_custom(CodedY, CodedCb, CodedCr, [mamp namp], ...
 Xlabrec = invscan(XScanrec);
 
 % Dequantize labels
-Xtransrec = desquantmat(Xlabrec, caliQ);
+Xtransrec = desquantmat(Xlabrec, int2str(caliQ));
 
 % Perform 2D iDCT on 8x8 pixel blocks
 Xamprec = imidct(Xtransrec, m, n);
@@ -102,7 +106,7 @@ Xrec_rgb = uint8(round(ycbcr2rgb(Xamprec / 255) * 255));
 Xrec = Xrec_rgb(1:m, 1:n, 1:3);
 
 % Generate decompressed file
-dec_file = strcat(dec_filepath, basename, '_dec_custom', '.bmp');
+dec_file = strcat(dec_filepath, basename,'_Q',caliQ, '_dec_custom', '.bmp');
 % Save the decompressed file
 imwrite(Xrec, dec_file);
 

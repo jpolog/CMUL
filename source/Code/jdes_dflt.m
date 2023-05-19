@@ -1,4 +1,4 @@
-function [MSE, RC, SNR] = jdes_dflt(fname, extension, show)
+function [MSE, RC, SNR] = jdes_dflt(fname, show)
 % Function: jdes_dflt (Default Huffman table decompression)
 % Inputs:
 % fname: String containing the file name, including suffix
@@ -20,8 +20,12 @@ dec_filepath = '../Images/decoded_dflt/';
 enc_filepath = '../Images/encoded_dflt/';  
 
 % Open the compressed file
-[~, basename, ~] = fileparts(fname);
-name = strcat(enc_filepath, basename,'_enc_dflt.hud');
+[~, name, ~] = fileparts(fname);
+tmp = strsplit(name, "_Q");
+basename = tmp(0);
+tmp = strsplit(tmp, "_");
+caliQ = tmp(0);
+name = strcat(enc_filepath, basename,'_Q',int2str(caliQ),'_enc_dflt.hud');
 enc_fid = fopen(name, 'r');
 
 % Verbosity flag
@@ -82,7 +86,7 @@ Xrec_rgb = uint8(round(ycbcr2rgb(Xamprec / 255) * 255)); % Recovered image
 Xrec = Xrec_rgb(1:m, 1:n, :);
 
 % Generate decompressed file
-dec_file = strcat(dec_filepath, basename, '_dec_dflt', '.bmp');
+dec_file = strcat(dec_filepath, basename,'_Q',int2str(caliQ),'_dec_dflt', '.bmp');
 % Save the decompressed file
 imwrite(Xrec, dec_file);
 

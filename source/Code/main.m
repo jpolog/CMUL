@@ -3,40 +3,82 @@ clear
 clc
 
 addpath('./auxiliar');
+orig_filepath = '../Images/original/'; 
+data_filepath = '../Data/';
+enc_dflt_filepath = '../Images/encoded_dflt/';  
+enc_custom_filepath = '../Images/encoded_custom/';  
 
-% Define the list of images and caliQ to test
-%images = {'images/lena.bmp', 'images/lennon.bmp', 'images/cshapes.bmp'};
-images = ["../Images/original/Img03.bmp"];
-caliQ = [100];
+
+% Define the list of images and caliQ factor
+
+%orig_images = ["graph.bmp","gradient.bmp","explorer.bmp","pattern.bmp","triangles.bmp","cshapes.bmp","color_bars.bmp","candados.bmp","lennon.bmp","lena.bmp"];
+%orig_images = ["graph.bmp","explorer.bmp","cshapes.bmp","candados.bmp","lennon.bmp","lena.bmp"];
+orig_images = ["graph.bmp"];
+caliQ = [5,25,50,100,250,500,750,1000];
+%caliQ = [5];
+
+% Matrices to store the experimental data
+% One for each parameter (MSE,RC,SNR) and mode (DFLT,CUSTOM)
+MSE_DFLT = [];
+MSE_CUSTOM = [];
+RC_DFLT = [];
+RC_CUSTOM = [];
+SNR_DFLT = [];
+SNR_CUSTOM = [];
+
 
 % Loop through each image and compression level, and compute the compression rate and mean squared error
-for img = images
+for img = orig_images    
+    MSE_DFLT_COL = [];
+    MSE_CUSTOM_COL = [];
+    RC_DFLT_COL = [];
+    RC_CUSTOM_COL = [];
+    SNR_DFLT_COL = [];
+    SNR_CUSTOM_COL = [];
+    
+    
+    
+    % Complete path to the file
+    fname = strcat(orig_filepath, img);
+    
     for j = 1:length(caliQ)
-        %%% Compresor Default %%%
+        %%% Default Compressor %%%
         fprintf('Processing %s with caliQ = %.2f and Custom Huffman compressor\n', img, caliQ(j));
         % time the whole process
         t_ini = cputime;
         % Compress the image
-        jcom_custom(img, caliQ(j));
+        jcom_dflt(fname, caliQ(j));
         % Decompress the image
-        [MSE_C, RC_C, SNR_C] = jdes_custom(img);
+        % Compressed file name
+        [~,basename,~] = fileparts(img);
+        c_fname = strcat(enc_dflt_filepath, basename,'_Q',caliQ(j),'_enc_dflt.hud');
+        [MSE_C, RC_C, SNR_C] = jdes_dflt(c_fname);
         % Total CPU time
         t_total = cputime - t_ini;
         fprintf('\n---------------------------\nTIEMPO TOTAL: %f \n\n', t_total);
         
         %%% Compresor Custom %%%
-        fprintf('Processing %s with caliQ = %.2f and Custom Huffman compressor\n', img, caliQ(j));
+        fprintf('Processing %s with caliQ = %.2f and Custom Huffman compressor\n', fname, caliQ(j));
         % time the whole process
         t_ini = cputime;
         % Compress the image
-        jcom_dflt(img, caliQ(j));
+        jcom_custom(fname, caliQ(j));
         % Decompress the image
-        [MSE_D, RC_D, SNR_D] = jdes_dflt(img);
+        c_fname = strcat(enc_custom_filepath, basename,'_Q',caliQ(j),'_enc_custom.hud');
+        [MSE_D, RC_D, SNR_D] = jdes_custom(fname);
         % Total CPU time
         t_total = cputime - t_ini;
         fprintf('\n---------------------------\nTIEMPO TOTAL: %f \n\n', t_total);
         
-        % Write the results to a file
+        % Store results in each matrix
+        MSE_DFLT_COL = [MSE_DFLT_COL; MSE_D];
+        MSE_CUSTOM_COL = [MSE_CUSTOM_COL; MSE_C];
+        RC_DFLT_COL = [RC_DFLT_COL; RC_D];
+        RC_CUSTOM_COL = [RC_CUSTOM_COL; RC_C];
+        SNR_DFLT_COL = [SNR_DFLT_COL; SNR_D];
+        SNR_CUSTOM_COL = [SNR_CUSTOM_COL; SNR_C];
+        
+        
         fid = fopen('results.txt', 'a');
         fprintf(fid,'CUSTOM\n');
         fprintf(fid, 'IMG:%s\n\t%.2f\n\t%f\n\t%f\n\t%f\n\t%f\n', img, caliQ(j),MSE_C, RC_C, SNR_C);
@@ -46,28 +88,24 @@ for img = images
         fclose(fid);
         
     end
-end
-
-
-
-function [MSE, RC, SNR] = compress_decompress(fname, caliQ, compressor_type)
-    if compressor_type == 0
-        compressor = @jcom_dflt;
-        decompressor = @jdes_dflt;
-    elseif compressor_type == 1
-        compressor = @jcom_custom;
-        decompressor = @jdes_custom;
-    else
-        error('Invalid compressor type');
-    end
-    % time the whole process
-    t_ini = cputime;
-    % Compress the image
-    compressor(fname, caliQ);
-    % Total CPU time
-    t_total = cputime - t_ini;
-    % Decompress the image
+    MSE_DFLT = [MSE_DFLT, MSE_DFLT_COL];
+    MSE_CUSTOM = [MSE_CUSTOM, MSE_CUSTOM_COL];
+    RC_DFLT = [RC_DFLT, RC_DFLT_COL];
+    RC_CUSTOM = [RC_CUSTOM, RC_CUSTOM_COL];
+    SNR_DFLT = [SNR_DFLT, SNR_DFLT_COL];
+    SNR_CUSTOM = [SNR_CUSTOM, SNR_CUSTOM_COL];
     
-    [MSE, RC, SNR] = decompressor(fname);
-    fprintf('\n---------------------------\nTIEMPO TOTAL: %f \n\n', t_total);
 end
+
+% write all data to files
+dlmwrite(strcat(data_filepath,'MSE_default.csv'),MSE_DFLT,'delimiter', ',');
+dlmwrite(strcat(data_filepath,'MSE_custom.csv'),MSE_CUSTOM, 'delimiter', ',');
+dlmwrite(strcat(data_filepath,'RC_default.csv'),RC_DFLT,'delimiter', ',');
+dlmwrite(strcat(data_filepath,'RC_custom.csv'),RC_CUSTOM,'delimiter', ',');
+dlmwrite(strcat(data_filepath,'SNR_default.csv'),SNR_DFLT,'delimiter', ',');
+dlmwrite(strcat(data_filepath,'SNR_custom.csv'),SNR_CUSTOM,'delimiter', ',');
+
+
+
+
+

@@ -1,4 +1,4 @@
-function RC = jcom_dflt(fname, caliQ, extension)
+function RC = jcom_dflt(fname, caliQ)
 % jcom_dflt: Image compression based on default Huffman tables
 %
 % Inputs:
@@ -21,6 +21,9 @@ end
 
 % Encoded images will be sotred here
 enc_filepath = '../Images/encoded_dflt/';  
+% Generate compressed file name (.hud extension)
+[~, basename, ~] = fileparts(fname);
+encoded_file = strcat(enc_filepath, basename,'_Q',int2str(caliQ),'_enc_dflt.hud');
 
 % Get initial time
 t_ini = cputime;
@@ -85,10 +88,6 @@ caliQ = uint32(caliQ);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Write to the compressed file %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Generate compressed file name (.hud extension)
-[~, name, ~] = fileparts(fname);
-encoded_file = strcat(enc_filepath, name, '_enc_dflt.hud');
 
 % Create the compressed file
 fid = fopen(encoded_file, 'w');

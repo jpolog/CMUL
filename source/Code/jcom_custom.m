@@ -1,4 +1,4 @@
-function RC = jcom_custom(fname, caliQ, extension)
+function RC = jcom_custom(fname, caliQ)
 % jcom_custom: Image compression based on customized Huffman tables
 %
 % Inputs:
@@ -22,6 +22,9 @@ end
 
 % Encoded images will be sotred here
 enc_filepath = '../Images/encoded_custom/';  
+% Generate compressed file name (.hud extension)
+[~, basename, ~] = fileparts(fname);
+encoded_file = strcat(enc_filepath, basename,'_Q',int2str(caliQ),'_enc_custom.hud');
 
 % Get initial CPU time
 t_ini = cputime;
@@ -112,10 +115,6 @@ caliQ = uint32(caliQ);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Write to the compressed file %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Generate compressed file name (.hud extension)
-[~, name, ~] = fileparts(fname);
-encoded_file = strcat(enc_filepath, name, '_enc_custom.hud');
 
 % Create the compressed file
 fid = fopen(encoded_file, 'w');

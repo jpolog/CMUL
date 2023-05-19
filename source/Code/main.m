@@ -79,14 +79,6 @@ for img = orig_images
         SNR_CUSTOM_COL = [SNR_CUSTOM_COL; SNR_C];
         
         
-        fid = fopen('results.txt', 'a');
-        fprintf(fid,'CUSTOM\n');
-        fprintf(fid, 'IMG:%s\n\t%.2f\n\t%f\n\t%f\n\t%f\n\t%f\n', img, caliQ(j),MSE_C, RC_C, SNR_C);
-        fprintf(fid,'DEFAULT\n');
-        fprintf(fid, 'IMG:%s\n\t%.2f\n\t%f\n\t%f\n\t%f\n\t%f\n', img, caliQ(j),MSE_D, RC_D, SNR_D);
-        fprintf(fid, '\n\n\n---------------------------\n\n\n');
-        fclose(fid);
-        
     end
     MSE_DFLT = [MSE_DFLT, MSE_DFLT_COL];
     MSE_CUSTOM = [MSE_CUSTOM, MSE_CUSTOM_COL];

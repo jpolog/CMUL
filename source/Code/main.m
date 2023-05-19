@@ -52,7 +52,7 @@ for img = orig_images
         % Compressed file name
         [~,basename,~] = fileparts(fname);
         c_fname = strcat(enc_dflt_filepath, basename,'_Q',num2str(caliQ(j)),'_enc_dflt.hud');
-        [MSE_D, RC_D, SNR_D] = jdes_dflt(c_fname);
+        [MSE_D, RC_D, SNR_D] = jdes_dflt(c_fname,false);
         % Total CPU time
         t_total = cputime - t_ini;
         fprintf('\n---------------------------\nTIEMPO TOTAL: %f \n\n', t_total);
@@ -65,7 +65,7 @@ for img = orig_images
         jcom_custom(fname, caliQ(j));
         % Decompress the image
         c_fname = strcat(enc_custom_filepath, basename,'_Q',num2str(caliQ(j)),'_enc_custom.hud');
-        [MSE_C, RC_C, SNR_C] = jdes_custom(c_fname);
+        [MSE_C, RC_C, SNR_C] = jdes_custom(c_fname,false);
         % Total CPU time
         t_total = cputime - t_ini;
         fprintf('\n---------------------------\nTIEMPO TOTAL: %f \n\n', t_total);

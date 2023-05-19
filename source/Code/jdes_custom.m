@@ -9,7 +9,7 @@ function [MSE, RC, SNR] = jdes_custom(fname, show)
 % RC: Compression ratio
 % SNR: Signal-to-Noise Ratio
 
-if nargin < 3
+if nargin < 2
     show = true;
 end
 

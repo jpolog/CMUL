@@ -14,8 +14,8 @@ enc_custom_filepath = '../Images/encoded_custom/';
 orig_images = ["graph.bmp","gradient.bmp","explorer.bmp","pattern.bmp","noise.bmp","cshapes.bmp","color_bars.bmp","candados.bmp","lennon.bmp","lena.bmp"];
 %orig_images = ["graph.bmp","explorer.bmp","cshapes.bmp","candados.bmp","lennon.bmp","lena.bmp"];
 %orig_images = ["color_bars.bmp","lena.bmp"];
-%caliQ = [5,25,50,100,250,500,750,1000];
-caliQ = [5];
+caliQ = [5,25,50,100,175,250,500,1000];
+%caliQ = [5];
 
 
 
@@ -28,6 +28,7 @@ RC_CUSTOM = [];
 SNR_DFLT = [];
 SNR_CUSTOM = [];
 
+t_global_ini = cputime; 
 
 % Loop through each image and compression level, and compute the compression rate and mean squared error
 for img = orig_images    
@@ -99,50 +100,9 @@ dlmwrite(strcat(data_filepath,'RC_custom.csv'),RC_CUSTOM,'delimiter', ';');
 dlmwrite(strcat(data_filepath,'SNR_default.csv'),SNR_DFLT,'delimiter', ';');
 dlmwrite(strcat(data_filepath,'SNR_custom.csv'),SNR_CUSTOM,'delimiter', ';');
 
-
-
-
-fidMSE_D = fopen(strcat(data_filepath,'MSE_default.csv'),'r');
-fidMSE_C = fopen(strcat(data_filepath,'MSE_custom.csv'),'r');
-fidRC_D = fopen(strcat(data_filepath,'RC_default.csv'),'r');
-fidRC_C = fopen(strcat(data_filepath,'RC_custom.csv'),'r');
-fidSNR_D = fopen(strcat(data_filepath,'SNR_default.csv'),'r');
-fidSNR_C = fopen(strcat(data_filepath,'SNR_custom.csv'),'r');
-% write each image name as a string separated by commas in each output file
-for i = 1:length(orig_images)
-    if i == 1 % create temp file 
-        fidMSE_D_temp = fopen(strcat(data_filepath,'MSE_default_temp.csv'),'w');
-        fidMSE_C_temp = fopen(strcat(data_filepath,'MSE_custom_temp.csv'),'w');
-        fidRC_D_temp = fopen(strcat(data_filepath,'RC_default_temp.csv'),'w');
-        fidRC_C_temp = fopen(strcat(data_filepath,'RC_custom_temp.csv'),'w');
-        fidSNR_D_temp = fopen(strcat(data_filepath,'SNR_default_temp.csv'),'w');
-        fidSNR_C_temp = fopen(strcat(data_filepath,'SNR_custom_temp.csv'),'w');
-    end
-    if i == length(orig_images) % format correctly
-        fprintf(fidMSE_D,'%s',orig_images(i));
-        fprintf(fidMSE_C,'%s',orig_images(i));
-        fprintf(fidRC_D,'%s',orig_images(i));
-        fprintf(fidRC_C,'%s',orig_images(i));
-        fprintf(fidSNR_D,'%s',orig_images(i));
-        fprintf(fidSNR_C,'%s',orig_images(i));
-        fclose(fidMSE_D);
-        fclose(fidMSE_C);
-        fclose(fidRC_D);
-        fclose(fidRC_C);
-        fclose(fidSNR_D);
-        fclose(fidSNR_C);
-    else
-        fprintf(fidMSE_D,'%s;',orig_images(i));
-        fprintf(fidMSE_C,'%s;',orig_images(i));
-        fprintf(fidRC_D,'%s;',orig_images(i));
-        fprintf(fidRC_C,'%s;',orig_images(i));
-        fprintf(fidSNR_D,'%s;',orig_images(i));
-        fprintf(fidSNR_C,'%s;',orig_images(i));
-    end
-end
-
-
-
+% total time
+t_total = cputime-t_global_ini;
+fprintf('\n\nGLOBAL TIME: %f min', t_total/60);
 
 
 

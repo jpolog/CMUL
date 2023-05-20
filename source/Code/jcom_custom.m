@@ -5,9 +5,8 @@ function RC = jcom_custom(fname, caliQ)
 %   fname: File name string, including suffix
 %          Supports BMP and JPEG, indexed and truecolor
 %   caliQ: Quality factor (positive integer >= 1)
-%          100: standard quality
-%          >100: lower quality
-%          <100: higher quality
+%          1: standard quality
+%          >1: lower quality
 %   extension: String indicating the file extension (e.g., bmp or png)
 %
 % Outputs:

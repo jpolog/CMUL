@@ -83,10 +83,10 @@ for img = orig_images
         
     end
     % Data of each image
-    img_metrics = [MSE_DFLT_COL,RC_DFLT_COL,SNR_DFLT_COL,MSE_CUSTOM_COL,RC_CUSTOM_COL,SNR_CUSTOM_COL];
-    dlmwrite(strcat(data_filepath,basename,'_metrics.csv'),img_metrics,'delimiter', ';');
-
-    
+    img_DFLT = [MSE_DFLT_COL,RC_DFLT_COL,SNR_DFLT_COL];
+    img_CUSTOM = [MSE_CUSTOM_COL,RC_CUSTOM_COL,SNR_CUSTOM_COL];
+    dlmwrite(strcat(data_filepath,basename,'_default.csv'),img_DFLT,'delimiter', ';');
+    dlmwrite(strcat(data_filepath,basename,'_custom.csv'),img_CUSTOM,'delimiter', ';');
     
     % Global Data of all images
     MSE_DFLT = [MSE_DFLT, MSE_DFLT_COL];

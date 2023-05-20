@@ -42,12 +42,12 @@ for i = 1:length(orig_images)
         fclose(fidSNR_D);
         fclose(fidSNR_C);
     else
-        fprintf(fidMSE_D,'%s,',orig_images(i));
-        fprintf(fidMSE_C,'%s,',orig_images(i));
-        fprintf(fidRC_D,'%s,',orig_images(i));
-        fprintf(fidRC_C,'%s,',orig_images(i));
-        fprintf(fidSNR_D,'%s,',orig_images(i));
-        fprintf(fidSNR_C,'%s,',orig_images(i));
+        fprintf(fidMSE_D,'%s;',orig_images(i));
+        fprintf(fidMSE_C,'%s;',orig_images(i));
+        fprintf(fidRC_D,'%s;',orig_images(i));
+        fprintf(fidRC_C,'%s;',orig_images(i));
+        fprintf(fidSNR_D,'%s;',orig_images(i));
+        fprintf(fidSNR_C,'%s;',orig_images(i));
     end
 end
 
@@ -126,12 +126,12 @@ end
 
 
 % write all data to files
-dlmwrite(strcat(data_filepath,'MSE_default.csv'),MSE_DFLT,'delimiter', ',','roffset',1, '-append');
-dlmwrite(strcat(data_filepath,'MSE_custom.csv'),MSE_CUSTOM, 'delimiter', ',', 'roffset',1, '-append');
-dlmwrite(strcat(data_filepath,'RC_default.csv'),RC_DFLT,'delimiter', ',', 'roffset',1, '-append');
-dlmwrite(strcat(data_filepath,'RC_custom.csv'),RC_CUSTOM,'delimiter', ',', 'roffset',1, '-append');
-dlmwrite(strcat(data_filepath,'SNR_default.csv'),SNR_DFLT,'delimiter', ',', 'roffset',1, '-append');
-dlmwrite(strcat(data_filepath,'SNR_custom.csv'),SNR_CUSTOM,'delimiter', ',', 'roffset',1, '-append');
+dlmwrite(strcat(data_filepath,'MSE_default.csv'),MSE_DFLT,'delimiter', ';','roffset',1, '-append');
+dlmwrite(strcat(data_filepath,'MSE_custom.csv'),MSE_CUSTOM, 'delimiter', ';', 'roffset',1, '-append');
+dlmwrite(strcat(data_filepath,'RC_default.csv'),RC_DFLT,'delimiter', ';', 'roffset',1, '-append');
+dlmwrite(strcat(data_filepath,'RC_custom.csv'),RC_CUSTOM,'delimiter', ';', 'roffset',1, '-append');
+dlmwrite(strcat(data_filepath,'SNR_default.csv'),SNR_DFLT,'delimiter', ';', 'roffset',1, '-append');
+dlmwrite(strcat(data_filepath,'SNR_custom.csv'),SNR_CUSTOM,'delimiter', ';', 'roffset',1, '-append');
 
 
 

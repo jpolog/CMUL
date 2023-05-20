@@ -5,15 +5,17 @@ clc
 addpath('./auxiliar');
 orig_filepath = '../Images/original/'; 
 data_filepath = '../Data/';
+enc_dflt_filepath = '../Images/encoded_dflt/';  
+enc_custom_filepath = '../Images/encoded_custom/';  
 
 
 % Define the list of images and caliQ factor
 
-%orig_images = ["graph.bmp","gradient.bmp","explorer.bmp","pattern.bmp","triangles.bmp","cshapes.bmp","color_bars.bmp","candados.bmp","lennon.bmp","lena.bmp"];
-orig_images = ["graph.bmp","explorer.bmp","cshapes.bmp","candados.bmp","lennon.bmp","lena.bmp"];
-orig_images = ["graph.bmp"];
-%caliQ = [5,25,50,100,250,500,750,1000];
-caliQ = [5];
+orig_images = ["graph.bmp","gradient.bmp","explorer.bmp","pattern.bmp","triangles.bmp","cshapes.bmp","color_bars.bmp","candados.bmp","lennon.bmp","lena.bmp"];
+%orig_images = ["graph.bmp","explorer.bmp","cshapes.bmp","candados.bmp","lennon.bmp","lena.bmp"];
+%orig_images = ["lena.bmp"];
+caliQ = [5,25,50,100,250,500,750,1000];
+%caliQ = [5];
 
 % Matrices to store the experimental data
 % One for each parameter (MSE,RC,SNR) and mode (DFLT,CUSTOM)
@@ -34,6 +36,12 @@ for img = orig_images
     SNR_DFLT_COL = [];
     SNR_CUSTOM_COL = [];
     
+    % write the header in the output files
+    strcat(data_filepath,'MSE_default.csv')
+    strcat(data_filepath,'MSE_custom.csv')
+    strcat(data_filepath,'RC_default.csv')
+    strcat(data_filepath,'RC_custom.csv')
+    
     
     
     % Complete path to the file
@@ -45,9 +53,12 @@ for img = orig_images
         % time the whole process
         t_ini = cputime;
         % Compress the image
-        jcom_custom(fname, caliQ(j));
+        jcom_dflt(fname, caliQ(j));
         % Decompress the image
-        [MSE_C, RC_C, SNR_C] = jdes_custom(fname);
+        % Compressed file name
+        [~,basename,~] = fileparts(fname);
+        c_fname = strcat(enc_dflt_filepath, basename,'_Q',num2str(caliQ(j)),'_enc_dflt.hud');
+        [MSE_D, RC_D, SNR_D] = jdes_dflt(c_fname,false);
         % Total CPU time
         t_total = cputime - t_ini;
         fprintf('\n---------------------------\nTIEMPO TOTAL: %f \n\n', t_total);
@@ -57,9 +68,10 @@ for img = orig_images
         % time the whole process
         t_ini = cputime;
         % Compress the image
-        jcom_dflt(fname, caliQ(j));
+        jcom_custom(fname, caliQ(j));
         % Decompress the image
-        [MSE_D, RC_D, SNR_D] = jdes_dflt(fname);
+        c_fname = strcat(enc_custom_filepath, basename,'_Q',num2str(caliQ(j)),'_enc_custom.hud');
+        [MSE_C, RC_C, SNR_C] = jdes_custom(c_fname,false);
         % Total CPU time
         t_total = cputime - t_ini;
         fprintf('\n---------------------------\nTIEMPO TOTAL: %f \n\n', t_total);
@@ -73,14 +85,6 @@ for img = orig_images
         SNR_CUSTOM_COL = [SNR_CUSTOM_COL; SNR_C];
         
         
-        fid = fopen('results.txt', 'a');
-        fprintf(fid,'CUSTOM\n');
-        fprintf(fid, 'IMG:%s\n\t%.2f\n\t%f\n\t%f\n\t%f\n\t%f\n', img, caliQ(j),MSE_C, RC_C, SNR_C);
-        fprintf(fid,'DEFAULT\n');
-        fprintf(fid, 'IMG:%s\n\t%.2f\n\t%f\n\t%f\n\t%f\n\t%f\n', img, caliQ(j),MSE_D, RC_D, SNR_D);
-        fprintf(fid, '\n\n\n---------------------------\n\n\n');
-        fclose(fid);
-        
     end
     MSE_DFLT = [MSE_DFLT, MSE_DFLT_COL];
     MSE_CUSTOM = [MSE_CUSTOM, MSE_CUSTOM_COL];
@@ -91,25 +95,15 @@ for img = orig_images
     
 end
 
+
 % write all data to files
-fid = fopen(strcat(data_filepath,'MSE_default.xls'), 'w');
-dlmwrite(fid,MSE_DFLT,'delimiter', ',');
-fclose(fid);
-fid = fopen(sstrcat(data_filepath,'MSE_custom.xls'), 'w');
-dlmwrite(fid,MSE_CUSTOM, 'delimiter', ',');
-fclose(fid);
-fid = fopen(strcat(data_filepath,'RC_default.xls'), 'w');
-dlmwrite(strcat(data_filepath,),RC_DFLT,'delimiter', ',');
-fclose(fid);
-fid = fopen(strcat(data_filepath,'MSE_default.xls'), 'w');
-dlmwrite(strcat(data_filepath,'RC_custom.xls'),RC_CUSTOM,'delimiter', ',');
-fclose(fid);
-fid = fopen(strcat(data_filepath,'MSE_default.xls'), 'w');
-dlmwrite(strcat(data_filepath,'SNR_default.xls'),SNR_DFLT,'delimiter', ',');
-fclose(fid);
-fid = fopen(strcat(data_filepath,'MSE_default.xls'), 'w');
-dlmwrite(strcat(data_filepath,'SNR_custom.xls'),SNR_CUSTOM,'delimiter', ',');
-fclose(fid);
+dlmwrite(strcat(data_filepath,'MSE_default.csv'),MSE_DFLT,'delimiter', ',');
+dlmwrite(strcat(data_filepath,'MSE_custom.csv'),MSE_CUSTOM, 'delimiter', ',');
+dlmwrite(strcat(data_filepath,'RC_default.csv'),RC_DFLT,'delimiter', ',');
+dlmwrite(strcat(data_filepath,'RC_custom.csv'),RC_CUSTOM,'delimiter', ',');
+dlmwrite(strcat(data_filepath,'SNR_default.csv'),SNR_DFLT,'delimiter', ',');
+dlmwrite(strcat(data_filepath,'SNR_custom.csv'),SNR_CUSTOM,'delimiter', ',');
+
 
 
 

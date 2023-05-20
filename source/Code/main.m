@@ -13,43 +13,9 @@ enc_custom_filepath = '../Images/encoded_custom/';
 
 %orig_images = ["graph.bmp","gradient.bmp","explorer.bmp","pattern.bmp","triangles.bmp","cshapes.bmp","color_bars.bmp","candados.bmp","lennon.bmp","lena.bmp"];
 %orig_images = ["graph.bmp","explorer.bmp","cshapes.bmp","candados.bmp","lennon.bmp","lena.bmp"];
-orig_images = ["color_bars.bmp"];
+orig_images = ["color_bars.bmp","lena.bmp"];
 %caliQ = [5,25,50,100,250,500,750,1000];
-caliQ = [5,25,50,100];
-
-
-% write each image name as a string separated by commas in each output file
-for i = 1:length(orig_images)
-    if i == 1
-        fidMSE_D = fopen(strcat(data_filepath,'MSE_default.csv'),'w');
-        fidMSE_C = fopen(strcat(data_filepath,'MSE_custom.csv'),'w');
-        fidRC_D = fopen(strcat(data_filepath,'RC_default.csv'),'w');
-        fidRC_C = fopen(strcat(data_filepath,'RC_custom.csv'),'w');
-        fidSNR_D = fopen(strcat(data_filepath,'SNR_default.csv'),'w');
-        fidSNR_C = fopen(strcat(data_filepath,'SNR_custom.csv'),'w');
-    end
-    if i == length(orig_images)
-        fprintf(fidMSE_D,'%s',orig_images(i));
-        fprintf(fidMSE_C,'%s',orig_images(i));
-        fprintf(fidRC_D,'%s',orig_images(i));
-        fprintf(fidRC_C,'%s',orig_images(i));
-        fprintf(fidSNR_D,'%s',orig_images(i));
-        fprintf(fidSNR_C,'%s',orig_images(i));
-        fclose(fidMSE_D);
-        fclose(fidMSE_C);
-        fclose(fidRC_D);
-        fclose(fidRC_C);
-        fclose(fidSNR_D);
-        fclose(fidSNR_C);
-    else
-        fprintf(fidMSE_D,'%s;',orig_images(i));
-        fprintf(fidMSE_C,'%s;',orig_images(i));
-        fprintf(fidRC_D,'%s;',orig_images(i));
-        fprintf(fidRC_C,'%s;',orig_images(i));
-        fprintf(fidSNR_D,'%s;',orig_images(i));
-        fprintf(fidSNR_C,'%s;',orig_images(i));
-    end
-end
+caliQ = [5];
 
 
 
@@ -126,12 +92,14 @@ end
 
 
 % write all data to files
-dlmwrite(strcat(data_filepath,'MSE_default.csv'),MSE_DFLT,'delimiter', ';','roffset',1, '-append');
-dlmwrite(strcat(data_filepath,'MSE_custom.csv'),MSE_CUSTOM, 'delimiter', ';', 'roffset',1, '-append');
-dlmwrite(strcat(data_filepath,'RC_default.csv'),RC_DFLT,'delimiter', ';', 'roffset',1, '-append');
-dlmwrite(strcat(data_filepath,'RC_custom.csv'),RC_CUSTOM,'delimiter', ';', 'roffset',1, '-append');
-dlmwrite(strcat(data_filepath,'SNR_default.csv'),SNR_DFLT,'delimiter', ';', 'roffset',1, '-append');
-dlmwrite(strcat(data_filepath,'SNR_custom.csv'),SNR_CUSTOM,'delimiter', ';', 'roffset',1, '-append');
+dlmwrite(strcat(data_filepath,'MSE_default.csv'),MSE_DFLT,'delimiter', ';');
+dlmwrite(strcat(data_filepath,'MSE_custom.csv'),MSE_CUSTOM, 'delimiter', ';');
+dlmwrite(strcat(data_filepath,'RC_default.csv'),RC_DFLT,'delimiter', ';');
+dlmwrite(strcat(data_filepath,'RC_custom.csv'),RC_CUSTOM,'delimiter', ';');
+dlmwrite(strcat(data_filepath,'SNR_default.csv'),SNR_DFLT,'delimiter', ';');
+dlmwrite(strcat(data_filepath,'SNR_custom.csv'),SNR_CUSTOM,'delimiter', ';');
+
+
 
 
 

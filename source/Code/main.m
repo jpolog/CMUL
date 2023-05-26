@@ -12,10 +12,7 @@ enc_custom_filepath = '../Images/encoded_custom/';
 % Define the list of images and caliQ factor
 
 orig_images = ["graph.bmp","gradient.bmp","explorer.bmp","pattern.bmp","noise.bmp","cshapes.bmp","color_bars.bmp","candados.bmp","lennon.bmp","lena.bmp"];
-%orig_images = ["graph.bmp","explorer.bmp","cshapes.bmp","candados.bmp","lennon.bmp","lena.bmp"];
-%orig_images = ["color_bars.bmp","lena.bmp"];
 caliQ = [5,25,50,100,175,250,500,1000];
-%caliQ = [5];
 
 
 

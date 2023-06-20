@@ -1,11 +1,3 @@
-% Javier Polo Gambin - PCEO
-
-% This script is used to test the performance of the Huffman encoders and decoders
-% It uses the images in the folder ../Images/original/ and the caliQ factors defined in the array caliQ
-% The resulting compressed images are stored in the folders ../Images/encoded_dflt/ and ../Images/encoded_custom/
-% It computes the MSE, RC and SNR for each image and caliQ factor, and stores the results in the folder ../Data/<image_name>/
-
-
 close all
 clear
 clc
@@ -116,6 +108,7 @@ dlmwrite(strcat(data_filepath,'SNR_custom.csv'),SNR_CUSTOM,'delimiter', ';');
 
 % total time
 t_total = cputime-t_global_ini;
-fprintf('\n\nTIEMPO TOTAL DEL PROGRAMA DE PRUEBAS: %f min, %f seg', t_total/60, mod(t_total,60));
+fprintf('\n\nTIEMPO TOTAL DEL PROGRAMA DE PRUEBAS: %f min', t_total/60);
+
 
 

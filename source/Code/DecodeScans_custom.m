@@ -1,5 +1,6 @@
 function XScanrec = DecodeScans_custom(CodedY, CodedCb, CodedCr, TAM, BITS_Y_DC, HUFFVAL_Y_DC, BITS_Y_AC, HUFFVAL_Y_AC, BITS_C_DC, HUFFVAL_C_DC, BITS_C_AC, HUFFVAL_C_AC)
 % Function: DecodeScans_custom
+%
 % Inputs:
 %   CodedY: Encoded luminance data
 %   CodedCb: Encoded Cb chrominance data

@@ -11,13 +11,17 @@ function RC = jcom_custom(fname, caliQ)
 %
 % Outputs:
 %   RC: Compression ratio
+%
+% Author:  Javier Polo Gambin - PCEO
 
 % Verbosity flag
 vflag = 1;
 if vflag
-    % Display function name
-    fprintf('Compressing %s using custom Huffman compression...\n\n', fname);
+    fprintf('--------------------------------------------------\n');
+    fprintf('Funcion jcom_custom:\n');
+    fprintf('Comprimiendo %s usando compresión Huffman Custom...\n\n', fname);
 end
+
 
 % Encoded images will be sotred here
 enc_filepath = '../Images/encoded_custom/';  
@@ -192,14 +196,16 @@ RC = 100 * ((TO - TC) / TO);
 t_total = cputime - t_ini;
 
 
-%%%%%%% Display information
+%%%%%%% Display information %%%%%%%
 if vflag
     fprintf('Total CPU Time: %s\n', t_total);
     fprintf('Generated compressed file: %s \n', encoded_file);
     fprintf('Original size: %d \n', TO);
     fprintf('Compressed size: %d \n', TC);
     fprintf('RC = %f \n', RC);
-    fprintf('Finished Default Huffman Compression\n\n');
+    fprintf('Terminado jcom_custom\n');
+    fprintf('--------------------------------------------------\n');
 end
+
 
 

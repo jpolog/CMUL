@@ -14,8 +14,9 @@ function RC = jcom_dflt(fname, caliQ)
 % Verbosity flag
 vflag = 1;
 if vflag
-    % Display function name
-    fprintf('Compressing %s using default Huffman compression...\n\n', fname);
+    fprintf('--------------------------------------------------\n');
+    fprintf('Funcion jcom_dflt:\n');
+    fprintf('Comprimiendo %s usando compresión Huffman Default...\n\n', fname);
 end
 
 % Encoded images will be sotred here
@@ -122,13 +123,14 @@ RC = 100 * ((TO - TC) / TO);
 % Total time
 t_total = cputime - t_ini;
 
-% Display information
+%%%%%%% Display information %%%%%%%
 if vflag
     fprintf('Total CPU Time: %s\n', t_total);
     fprintf('Obtained compressed file: %s \n', encoded_file);
     fprintf('Original size: %d \n', TO);
     fprintf('Compressed size: %d \n', TC);
     fprintf('RC = %f \n', RC);
-    fprintf('Finished Default Huffman Compression\n\n');
+    fprintf('Terminado jcom_dflt\n');
+    fprintf('--------------------------------------------------\n');
 end
 

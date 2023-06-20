@@ -16,3 +16,7 @@ Decompress:
 Obs: lab = Label
 
 CAMBIAR DECOMPRESS POR DECODE????? (CREO QUE NO)!!!!!
+
+Cambiar los nombres de las imágenes para que sean todas en inglés o en español
+
+RC se traduce como Compression Ratio??

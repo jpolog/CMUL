@@ -1,17 +1,16 @@
 function [MSE, RC, SNR] = jdes_dflt(fname, show)
 % Function: jdes_dflt (Default Huffman table decompression)
+%
 % Inputs:
-% fname: String containing the file name, including suffix
-% extension: String indicating the file extension, e.g., bmp or png
-% show: Flag to indicate whether to display the images (optional)
+%   fname: String containing the file name, including suffix
+%   extension: String indicating the file extension, e.g., bmp or png
+%   show: Flag to indicate whether to display the images (optional)
 % Outputs:
-% MSE: Mean Squared Error between the original and reconstructed images
-% RC: Compression ratio
-% SNR: Signal-to-Noise Ratio
-
-if nargin < 2
-    show = true;
-end
+%   MSE: Mean Squared Error between the original and reconstructed images
+%   RC: Compression ratio
+%   SNR: Signal-to-Noise Ratio
+%
+% Author:  Javier Polo Gambin - PCEO
     
 
 % Paths to original and decoded images
@@ -27,7 +26,9 @@ enc_fid = fopen(fname, 'r');
 % Verbosity flag
 vflag = 1;
 if vflag
-    fprintf('Decompressing %s using default Huffman tables...\n\n', fname);
+    fprintf('--------------------------------------------------\n');
+    fprintf('Funcion djes_dflt:\n');
+    fprintf('Descomprimiendo %s usando tablas Huffman Default...\n\n', fname);
 end
 
 % Read the parameters of the original image
@@ -111,11 +112,23 @@ RC = 100 * (TO - TC) / TO;
 % Calculate SNR (Signal-to-Noise Ratio)
 SNR = 10 * log10(sum(double(Xorig).^2, [1 2 3]) / sum((double(Xrec) - double(Xorig)).^2, [1 2 3]));
 
-% Visual Test of the results
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Visual Test of the results %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Don't show images by default
+if nargin < 2
+    show = false;
+end
+
 if show
-    figure('Name', 'Original Image (Xorig)');
+    figure('Name', 'Imagen Original');
     imshow(Xorig);
-    figure('Name', 'Reconstructed Image (Xrec)');
+    figure('Name', 'Imagen Reconstruida');
     imshow(Xrec);
 end
 
+if vflag
+    fprintf('Terminado jdes_dflt\n');
+    fprintf('--------------------------------------------------\n');
+end

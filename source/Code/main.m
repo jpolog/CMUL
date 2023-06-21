@@ -5,12 +5,12 @@
 % The resulting compressed images are stored in the folders ../Images/encoded_dflt/ and ../Images/encoded_custom/
 % It computes the MSE, RC and SNR for each image and caliQ factor, and stores the results in the folder ../Data/<image_name>/
 
-fprintf('Iniciando programa de testeo de los compresores Huffman\n')
-fprintf('----------------------------------------------------------------------------\n\n')
+fprintf('Iniciando programa de testeo de los compresores Huffman\n');
+fprintf('----------------------------------------------------------------------------\n\n');
 
-close all
-clear
-clc
+close all;
+clear;
+clc;
 
 addpath('./auxiliar');
 orig_filepath = '../Images/original/'; 

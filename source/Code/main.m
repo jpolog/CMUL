@@ -21,19 +21,21 @@ enc_custom_filepath = '../Images/encoded_custom/';
 
 % Define the list of images and caliQ factor
 
-orig_images = ["graph.bmp","gradient.bmp","explorer.bmp","pattern.bmp","noise.bmp","cshapes.bmp","color_bars.bmp","candados.bmp","lennon.bmp","lena.bmp"];
+orig_images = ["graph.bmp","gradient.bmp","explorer.bmp","pattern.bmp","noise.bmp","cshapes.bmp","color_lines.bmp","candados.bmp","lennon.bmp","lena.bmp"];
 caliQ = [5,25,50,100,175,250,500,1000];
 
 
 
 % Matrices to store the experimental data
-% One for each parameter (MSE,RC,SNR) and mode (DFLT,CUSTOM)
+% One for each parameter (MSE,RC,SNR,SSIM) and mode (DFLT,CUSTOM)
 MSE_DFLT = [];
 MSE_CUSTOM = [];
 RC_DFLT = [];
 RC_CUSTOM = [];
 SNR_DFLT = [];
 SNR_CUSTOM = [];
+SSIM_DFLT = [];
+SSIM_CUSTOM = [];
 
 t_global_ini = cputime; 
 
@@ -45,6 +47,8 @@ for img = orig_images
     RC_CUSTOM_COL = [];
     SNR_DFLT_COL = [];
     SNR_CUSTOM_COL = [];
+    SSIM_DFLT_COL = [];
+    SSIM_CUSTOM_COL = [];
     
     
     % Complete path to the file
@@ -61,7 +65,7 @@ for img = orig_images
         % Compressed file name
         [~,basename,~] = fileparts(fname);
         c_fname = strcat(enc_dflt_filepath, basename,'_Q',num2str(caliQ(j)),'_enc_dflt.hud');
-        [MSE_D, RC_D, SNR_D] = jdes_dflt(c_fname,false);
+        [MSE_D, RC_D, SNR_D, SSIM_D] = jdes_dflt(c_fname,false);
         % Total CPU time
         t_total = cputime - t_ini;
         fprintf('TIEMPO TOTAL - : %f \n', t_total);
@@ -75,7 +79,7 @@ for img = orig_images
         jcom_custom(fname, caliQ(j));
         % Decompress the image
         c_fname = strcat(enc_custom_filepath, basename,'_Q',num2str(caliQ(j)),'_enc_custom.hud');
-        [MSE_C, RC_C, SNR_C] = jdes_custom(c_fname,false);
+        [MSE_C, RC_C, SNR_C, SSIM_C] = jdes_custom(c_fname,false);
         % Total CPU time
         t_total = cputime - t_ini;
         fprintf('TIEMPO TOTAL: %f \n', t_total);
@@ -88,12 +92,14 @@ for img = orig_images
         RC_CUSTOM_COL = [RC_CUSTOM_COL; RC_C];
         SNR_DFLT_COL = [SNR_DFLT_COL; SNR_D];
         SNR_CUSTOM_COL = [SNR_CUSTOM_COL; SNR_C];
+        SSIM_DFLT_COL = [SSIM_DFLT_COL; SSIM_D];
+        SSIM_CUSTOM_COL = [SSIM_CUSTOM_COL; SSIM_C];
         
         
     end
     % Data of each image
-    img_DFLT = [MSE_DFLT_COL,RC_DFLT_COL,SNR_DFLT_COL];
-    img_CUSTOM = [MSE_CUSTOM_COL,RC_CUSTOM_COL,SNR_CUSTOM_COL];
+    img_DFLT = [MSE_DFLT_COL,RC_DFLT_COL,SNR_DFLT_COL,SSIM_DFLT_COL];
+    img_CUSTOM = [MSE_CUSTOM_COL,RC_CUSTOM_COL,SNR_CUSTOM_COL,SSIM_CUSTOM_COL];
     dlmwrite(strcat(data_filepath,basename,'/',basename,'_default.csv'),img_DFLT,'delimiter', ';');
     dlmwrite(strcat(data_filepath,basename,'/',basename,'_custom.csv'),img_CUSTOM,'delimiter', ';');
     
@@ -104,6 +110,8 @@ for img = orig_images
     RC_CUSTOM = [RC_CUSTOM, RC_CUSTOM_COL];
     SNR_DFLT = [SNR_DFLT, SNR_DFLT_COL];
     SNR_CUSTOM = [SNR_CUSTOM, SNR_CUSTOM_COL];
+    SSIM_DFLT = [SSIM_DFLT, SSIM_DFLT_COL];
+    SSIM_CUSTOM = [SSIM_CUSTOM, SSIM_CUSTOM_COL];
     
 end
 
@@ -115,6 +123,8 @@ dlmwrite(strcat(data_filepath,'RC_default.csv'),RC_DFLT,'delimiter', ';');
 dlmwrite(strcat(data_filepath,'RC_custom.csv'),RC_CUSTOM,'delimiter', ';');
 dlmwrite(strcat(data_filepath,'SNR_default.csv'),SNR_DFLT,'delimiter', ';');
 dlmwrite(strcat(data_filepath,'SNR_custom.csv'),SNR_CUSTOM,'delimiter', ';');
+dlmwrite(strcat(data_filepath,'SSIM_default.csv'),SSIM_DFLT,'delimiter', ';');
+dlmwrite(strcat(data_filepath,'SSIM_custom.csv'),SSIM_CUSTOM,'delimiter', ';');
 
 % total time
 t_total = cputime-t_global_ini;

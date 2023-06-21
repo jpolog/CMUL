@@ -1,4 +1,4 @@
-function [MSE, RC, SNR] = jdes_dflt(fname, show)
+function [MSE, RC, SNR, SSIM] = jdes_dflt(fname, show)
 % Function: jdes_dflt (Default Huffman table decompression)
 %
 % Inputs:
@@ -112,6 +112,8 @@ RC = 100 * (TO - TC) / TO;
 % Calculate SNR (Signal-to-Noise Ratio)
 SNR = 10 * log10(sum(double(Xorig).^2, [1 2 3]) / sum((double(Xrec) - double(Xorig)).^2, [1 2 3]));
 
+% Calculate SSIM (Structural Similarity Index)
+SSIM = ssim(Xrec,Xorig);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Visual Test of the results %

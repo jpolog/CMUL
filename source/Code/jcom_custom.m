@@ -200,8 +200,8 @@ t_total = cputime - t_ini;
 if vflag
     fprintf('Tiempo total CPU: %s\n', t_total);
     fprintf('Fichero comprimido generado: %s \n', encoded_file);
-    fprintf('TamaÃ±o original: %d \n', TO);
-    fprintf('TamaÃ±o comprimido: %d \n', TC);
+    fprintf('Tamaño original: %d \n', TO);
+    fprintf('Tamaño comprimido: %d \n', TC);
     fprintf('RC = %f \n', RC);
     fprintf('Terminado jcom_custom\n');
     fprintf('--------------------------------------------------\n');

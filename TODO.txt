@@ -32,3 +32,5 @@ Meter imagen de un partido de fútbol  porque tiene zonas del mismo color, es un
 Comparar compression time for when real-time performance is a crucial requirement.
 
 Bitrate: Calculate the bitrate for each algorithm, which is the average number of bits required to encode each pixel of the compressed image. Lower bitrates indicate more efficient compression. Compare the bitrates obtained by both algorithms to evaluate their efficiency.
+
+Citar algún artículo con SSIM

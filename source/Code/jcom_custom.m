@@ -19,7 +19,7 @@ vflag = 1;
 if vflag
     fprintf('--------------------------------------------------\n');
     fprintf('Funcion jcom_custom:\n');
-    fprintf('Comprimiendo %s usando compresión Huffman Custom...\n\n', fname);
+    fprintf('Comprimiendo %s usando tablas Huffman Custom...\n\n', fname);
 end
 
 
@@ -198,10 +198,10 @@ t_total = cputime - t_ini;
 
 %%%%%%% Display information %%%%%%%
 if vflag
-    fprintf('Total CPU Time: %s\n', t_total);
-    fprintf('Generated compressed file: %s \n', encoded_file);
-    fprintf('Original size: %d \n', TO);
-    fprintf('Compressed size: %d \n', TC);
+    fprintf('Tiempo total CPU: %s\n', t_total);
+    fprintf('Fichero comprimido generado: %s \n', encoded_file);
+    fprintf('Tamaño original: %d \n', TO);
+    fprintf('Tamaño comprimido: %d \n', TC);
     fprintf('RC = %f \n', RC);
     fprintf('Terminado jcom_custom\n');
     fprintf('--------------------------------------------------\n');

@@ -28,7 +28,7 @@ vflag = 1;
 if vflag
     fprintf('--------------------------------------------------\n');
     fprintf('Funcion djes_dflt:\n');
-    fprintf('Descomprimiendo %s usando tablas Huffman Default...\n\n', fname);
+    fprintf('Descomprimiendo %s usando tablas Huffman Default...\n', fname);
 end
 
 % Read the parameters of the original image

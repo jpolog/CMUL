@@ -16,7 +16,7 @@ vflag = 1;
 if vflag
     fprintf('--------------------------------------------------\n');
     fprintf('Funcion jcom_dflt:\n');
-    fprintf('Comprimiendo %s usando compresión Huffman Default...\n\n', fname);
+    fprintf('Comprimiendo %s usando tablas Huffman Default...\n', fname);
 end
 
 % Encoded images will be sotred here
@@ -125,10 +125,10 @@ t_total = cputime - t_ini;
 
 %%%%%%% Display information %%%%%%%
 if vflag
-    fprintf('Total CPU Time: %s\n', t_total);
-    fprintf('Obtained compressed file: %s \n', encoded_file);
-    fprintf('Original size: %d \n', TO);
-    fprintf('Compressed size: %d \n', TC);
+    fprintf('Tiempo total CPU: %s\n', t_total);
+    fprintf('Fichero comprimido generado: %s \n', encoded_file);
+    fprintf('Tamaño original: %d \n', TO);
+    fprintf('Tamaño comprimido: %d \n', TC);
     fprintf('RC = %f \n', RC);
     fprintf('Terminado jcom_dflt\n');
     fprintf('--------------------------------------------------\n');

@@ -15,9 +15,8 @@ function XScanrec = DecodeScans_custom(CodedY, CodedCb, CodedCr, TAM, BITS_Y_DC,
 % Verbosity flag
 vflag = 1;
 if vflag
-    fprintf('--------------------------------------------------\n');
-    fprintf('Funcion DecodeScans_custom:\n');
-    fprintf('Decodificando usando Tablas Huffman Custom...\n');
+    % Display function name
+    fprintf('Decoding using custom Huffman Tables...\n\n');
 end
 
 % Get initial time
@@ -57,9 +56,7 @@ XScanrec = cat(3, YRec, CBRec, CRRec);
 t_total = cputime - t_ini;
 
 if vflag
-
-fprintf('Los escaneos se han decodificado\n')
-fprintf('Tiempo total CPU: %s\n', t_total);
-fprintf('Terminado DecodeScans_custom\n');
-fprintf('--------------------------------------------------\n');
+fprintf('Scans have been decoded\n')
+fprintf('Total CPU Time: %s\n', t_total);
+fprintf('DecodeScans_custom finished\n');
 end

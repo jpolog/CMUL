@@ -21,8 +21,9 @@ function [CodedY, CodedCb, CodedCr, BITS_Y_DC, HUFFVAL_Y_DC, BITS_Y_AC, HUFFVAL_
 % Verbosity flag
 vflag = 1;
 if vflag
-    % Display function name
-    fprintf('Encoding using custom Huffman Tables...\n\n');
+    fprintf('--------------------------------------------------\n');
+    fprintf('Funcion EncodeScans_custom:\n');
+    fprintf('Codificando usando Tablas Huffman Custom...\n');
 end
 
 % Get initial time
@@ -88,7 +89,8 @@ CodedCr = EncodeSingleScan(CrScan, Cr_DC_CP, Cr_AC_ZCP, ehuf_C_DC, ehuf_C_AC);
 t_total = cputime - t_ini;
 
 if vflag
-fprintf('Components encoded in binary\n');
-fprintf('Total CPU Time: %s\n', t_total);
-fprintf('EncodeScans_custom finished\n\n');
+fprintf('Componentes codificados en binario\n');
+fprintf('Tiempo total CPU: %s\n', t_total);
+fprintf('Terminado EncodeScans_custom\n');
+fprintf('--------------------------------------------------\n');
 end

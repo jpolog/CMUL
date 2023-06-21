@@ -20,3 +20,15 @@ CAMBIAR DECOMPRESS POR DECODE????? (CREO QUE NO)!!!!!
 Cambiar los nombres de las imágenes para que sean todas en inglés o en español
 
 RC se traduce como Compression Ratio??
+
+Meter vflag como argumento??
+
+En encodeScans_custom los componentes están codificados EN BINARIO??
+
+DecodeScans --> Los escaneos se han decodificado??
+
+Meter imagen de un partido de fútbol  porque tiene zonas del mismo color, es un ejemplo común, se tiene que ver bien la pelota/los jugadores, etc.
+
+Comparar compression time for when real-time performance is a crucial requirement.
+
+Bitrate: Calculate the bitrate for each algorithm, which is the average number of bits required to encode each pixel of the compressed image. Lower bitrates indicate more efficient compression. Compare the bitrates obtained by both algorithms to evaluate their efficiency.

@@ -5,6 +5,8 @@
 % The resulting compressed images are stored in the folders ../Images/encoded_dflt/ and ../Images/encoded_custom/
 % It computes the MSE, RC and SNR for each image and caliQ factor, and stores the results in the folder ../Data/<image_name>/
 
+fprintf('Iniciando programa de testeo de los compresores Huffman\n')
+fprintf('----------------------------------------------------------------------------\n\n')
 
 close all
 clear
@@ -62,8 +64,8 @@ for img = orig_images
         [MSE_D, RC_D, SNR_D] = jdes_dflt(c_fname,false);
         % Total CPU time
         t_total = cputime - t_ini;
-        fprintf('\n---------------------------\nTIEMPO TOTAL - : %f \n\n', t_total);
-        fprintf('\n---------------------------\n\n---------------------------');
+        fprintf('TIEMPO TOTAL - : %f \n', t_total);
+        fprintf('--------------------------------------------------\n--------------------------------------------------\n');
         
         %%% Compresor Custom %%%
         fprintf('Procesando %s con caliQ = %.2f y el Compresor Huffman Custom\n', img, caliQ(j));
@@ -76,8 +78,8 @@ for img = orig_images
         [MSE_C, RC_C, SNR_C] = jdes_custom(c_fname,false);
         % Total CPU time
         t_total = cputime - t_ini;
-        fprintf('\n---------------------------\nTIEMPO TOTAL: %f \n\n', t_total);
-        fprintf('\n---------------------------\n\n---------------------------');
+        fprintf('TIEMPO TOTAL: %f \n', t_total);
+        fprintf('--------------------------------------------------\n--------------------------------------------------\n');
         
         % Store results in each matrix
         MSE_DFLT_COL = [MSE_DFLT_COL; MSE_D];
@@ -117,5 +119,7 @@ dlmwrite(strcat(data_filepath,'SNR_custom.csv'),SNR_CUSTOM,'delimiter', ';');
 % total time
 t_total = cputime-t_global_ini;
 fprintf('\n\nTIEMPO TOTAL DEL PROGRAMA DE PRUEBAS: %f min, %f seg', t_total/60, mod(t_total,60));
+
+fprintf('\n\nPrograma de pruebas finalizado\n\n')
 
 

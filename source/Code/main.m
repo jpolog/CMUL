@@ -20,7 +20,7 @@ enc_dflt_filepath = '../Images/encoded_dflt/';
 enc_custom_filepath = '../Images/encoded_custom/';  
 
 % Define the list of images and caliQ factor
-orig_images = ["graph.bmp","gradient.bmp","explorer.bmp","pattern.bmp","noise.bmp","cshapes.bmp","color_lines.bmp","candados.bmp","lennon.bmp","lena.bmp","mandrill.bmp","xray.bmp"];
+orig_images = ["graph.bmp","gradient.bmp","explorer.bmp","pattern.bmp","noise.bmp","cshapes.bmp","color_lines.bmp","candados.bmp","lennon.bmp","lena.bmp"];
 caliQ = [5, 25, 50, 100, 175, 250, 500, 1000];
 
 % Matrices to store the experimental data
@@ -41,6 +41,9 @@ t_global_ini = cputime;
 % Loop through each image and compression level, and compute the compression rate and mean squared error
 for img_idx = 1:num_images
     img = orig_images(img_idx);
+    fprintf('Procesando %s\n', img);
+    
+    % Complete path to the file
     fname = fullfile(orig_filepath, img);
     [~, basename, ~] = fileparts(fname);
     
@@ -50,19 +53,25 @@ for img_idx = 1:num_images
         %%% Default Compressor %%%
         fprintf('Procesando %s con caliQ = %.2f y el Compresor Huffman Default\n', img, caliQ_val);
         t_ini = cputime;
+        % Compress the image
         jcom_dflt(fname, caliQ_val);
+        % Decompress the image
         c_fname = fullfile(enc_dflt_filepath, strcat(basename, '_Q', num2str(caliQ_val), '_enc_dflt.hud'));
         [MSE_D, RC_D, SNR_D, SSIM_D] = jdes_dflt(c_fname, false);
+        % Total CPU time
         t_total = cputime - t_ini;
-        fprintf('TIEMPO TOTAL - : %f \n', t_total);
+        fprintf('TIEMPO TOTAL: %f \n', t_total);
         fprintf('--------------------------------------------------\n--------------------------------------------------\n');
         
-        %%% Compresor Custom %%%
+        %%% Custom Compressor %%%
         fprintf('Procesando %s con caliQ = %.2f y el Compresor Huffman Custom\n', img, caliQ_val);
         t_ini = cputime;
+        % Compress the image
         jcom_custom(fname, caliQ_val);
+        % Decompress the image
         c_fname = fullfile(enc_custom_filepath, strcat(basename, '_Q', num2str(caliQ_val), '_enc_custom.hud'));
         [MSE_C, RC_C, SNR_C, SSIM_C] = jdes_custom(c_fname, false);
+        % Total CPU time
         t_total = cputime - t_ini;
         fprintf('TIEMPO TOTAL: %f \n', t_total);
         fprintf('--------------------------------------------------\n--------------------------------------------------\n');
@@ -78,9 +87,9 @@ for img_idx = 1:num_images
         SSIM_CUSTOM(img_idx, caliQ_idx) = SSIM_C;
     end
     
-    % Data of each image
-    img_DFLT = [MSE_DFLT(img_idx, :); RC_DFLT(img_idx, :); SNR_DFLT(img_idx, :); SSIM_DFLT(img_idx, :)];
-    img_CUSTOM = [MSE_CUSTOM(img_idx, :); RC_CUSTOM(img_idx, :); SNR_CUSTOM(img_idx, :); SSIM_CUSTOM(img_idx, :)];
+    % Data of each image each matrix stored in a different column
+    img_DFLT = [caliQ', MSE_DFLT(img_idx, :)', RC_DFLT(img_idx, :)', SNR_DFLT(img_idx, :)', SSIM_DFLT(img_idx, :)'];
+    img_CUSTOM = [caliQ', MSE_CUSTOM(img_idx, :)', RC_CUSTOM(img_idx, :)', SNR_CUSTOM(img_idx, :)', SSIM_CUSTOM(img_idx, :)'];
     img_data_folder = fullfile(data_filepath, basename);
     mkdir(img_data_folder);
     dlmwrite(fullfile(img_data_folder, strcat(basename, '_default.csv')), img_DFLT, 'delimiter', ';');
@@ -99,6 +108,6 @@ dlmwrite(fullfile(data_filepath, 'SSIM_custom.csv'), SSIM_CUSTOM, 'delimiter', '
 
 % total time
 t_total = cputime - t_global_ini;
-fprintf('\n\nTIEMPO TOTAL DEL PROGRAMA DE PRUEBAS: %f min, %f seg', t_total / 60, mod(t_total, 60));
+fprintf('\nTIEMPO TOTAL DEL PROGRAMA DE PRUEBAS: %f min, %f seg\n', floor(t_total/60), mod(t_total, 60));
 
-fprintf('\n\nPrograma de pruebas finalizado\n\n');
+fprintf('\nPrograma de pruebas finalizado\n\n');

@@ -108,6 +108,6 @@ dlmwrite(fullfile(data_filepath, 'SSIM_custom.csv'), SSIM_CUSTOM, 'delimiter', '
 
 % total time
 t_total = cputime - t_global_ini;
-fprintf('\nTIEMPO TOTAL DEL PROGRAMA DE PRUEBAS: %f min, %f seg\n', floor(t_total/60), mod(t_total, 60));
+fprintf('\nTIEMPO TOTAL DEL PROGRAMA DE PRUEBAS: %.0f min, %.0f seg\n', floor(t_total/60), mod(t_total, 60));
 
 fprintf('\nPrograma de pruebas finalizado\n\n');

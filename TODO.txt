@@ -36,3 +36,5 @@ Bitrate: Calculate the bitrate for each algorithm, which is the average number o
 Citar algún artículo con SSIM
 
 SSIM en este caso nos da el mismo resultado para los dos compresores porque el resultado visual (la cantidad de componentes de la transformada DCT que se conservan) está determinado por caliQ, que en cada paso es igual en ambos (solo difiere la CODIFICACIÓN). Por esta razón lo usamos como medida para validar nuestro análisis subjetivo (a partir de un cierto valor lo consideraremos bueno CITAR GUIA SSIM Y LOS VALORES).  
+
+Borrar cosas que sobran de las funciones auxiliares

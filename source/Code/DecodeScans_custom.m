@@ -1,4 +1,4 @@
-function XScanrec = DecodeScans_custom(CodedY, CodedCb, CodedCr, TAM, BITS_Y_DC, HUFFVAL_Y_DC, BITS_Y_AC, HUFFVAL_Y_AC, BITS_C_DC, HUFFVAL_C_DC, BITS_C_AC, HUFFVAL_C_AC)
+function XScanrec = DecodeScans_custom(CodedY, CodedCb, CodedCr, tam, BITS_Y_DC, HUFFVAL_Y_DC, BITS_Y_AC, HUFFVAL_Y_AC, BITS_C_DC, HUFFVAL_C_DC, BITS_C_AC, HUFFVAL_C_AC)
 % Function: DecodeScans_custom: Decodes scans of luminance Y and chrominance 
 % Cb and Cr using custom Huffman tables
 %
@@ -29,31 +29,31 @@ t_ini = cputime;
 % Create Huffman coding and decoding tables %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Luminance DC table (Y_DC)
-[HUFFSIZE_Y_DC, HUFFCODE_Y_DC] = HCodeTables(BITS_Y_DC, HUFFVAL_Y_DC);
+[~, HUFFCODE_Y_DC] = HCodeTables(BITS_Y_DC, HUFFVAL_Y_DC);
 % Decoding table
 [MIN_Y_DC, MAX_Y_DC, VAL_Y_DC] = HDecodingTables(BITS_Y_DC, HUFFCODE_Y_DC);
 
 % Luminance AC table (Y_AC)
-[HUFFSIZE_Y_AC, HUFFCODE_Y_AC] = HCodeTables(BITS_Y_AC, HUFFVAL_Y_AC);
+[~, HUFFCODE_Y_AC] = HCodeTables(BITS_Y_AC, HUFFVAL_Y_AC);
 % Decoding table
 [MIN_Y_AC, MAX_Y_AC, VAL_Y_AC] = HDecodingTables(BITS_Y_AC, HUFFCODE_Y_AC);
 
 % Chrominance C_DC table
-[HUFFSIZE_C_DC, HUFFCODE_C_DC] = HCodeTables(BITS_C_DC, HUFFVAL_C_DC);
+[~, HUFFCODE_C_DC] = HCodeTables(BITS_C_DC, HUFFVAL_C_DC);
 % Decoding table
 [MIN_C_DC, MAX_C_DC, VAL_C_DC] = HDecodingTables(BITS_C_DC, HUFFCODE_C_DC);
 
 % Chrominance C_AC table
-[HUFFSIZE_C_AC, HUFFCODE_C_AC] = HCodeTables(BITS_C_AC, HUFFVAL_C_AC);
+[~, HUFFCODE_C_AC] = HCodeTables(BITS_C_AC, HUFFVAL_C_AC);
 % Decoding table
 [MIN_C_AC, MAX_C_AC, VAL_C_AC] = HDecodingTables(BITS_C_AC, HUFFCODE_C_AC);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Decode the luminance and chrominance scans %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Y = DecodeSingleScan(CodedY, MIN_Y_DC, MAX_Y_DC, VAL_Y_DC, HUFFVAL_Y_DC, MIN_Y_AC, MAX_Y_AC, VAL_Y_AC, HUFFVAL_Y_AC, TAM);
-CB = DecodeSingleScan(CodedCb, MIN_C_DC, MAX_C_DC, VAL_C_DC, HUFFVAL_C_DC, MIN_C_AC, MAX_C_AC, VAL_C_AC, HUFFVAL_C_AC, TAM);
-CR = DecodeSingleScan(CodedCr, MIN_C_DC, MAX_C_DC, VAL_C_DC, HUFFVAL_C_DC, MIN_C_AC, MAX_C_AC, VAL_C_AC, HUFFVAL_C_AC, TAM);
+Y = DecodeSingleScan(CodedY, MIN_Y_DC, MAX_Y_DC, VAL_Y_DC, HUFFVAL_Y_DC, MIN_Y_AC, MAX_Y_AC, VAL_Y_AC, HUFFVAL_Y_AC, tam);
+CB = DecodeSingleScan(CodedCb, MIN_C_DC, MAX_C_DC, VAL_C_DC, HUFFVAL_C_DC, MIN_C_AC, MAX_C_AC, VAL_C_AC, HUFFVAL_C_AC, tam);
+CR = DecodeSingleScan(CodedCr, MIN_C_DC, MAX_C_DC, VAL_C_DC, HUFFVAL_C_DC, MIN_C_AC, MAX_C_AC, VAL_C_AC, HUFFVAL_C_AC, tam);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Build the 3-D matrix (Y,Cb,Cr) %

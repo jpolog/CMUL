@@ -20,8 +20,8 @@ enc_dflt_filepath = '../Images/encoded_dflt/';
 enc_custom_filepath = '../Images/encoded_custom/';  
 
 % Define the list of images and caliQ factor
-orig_images = ["graph.bmp","gradient.bmp","explorer.bmp","pattern.bmp","noise.bmp","cshapes.bmp","color_lines.bmp","candados.bmp","lennon.bmp","lena.bmp","mandrill.bmp","xray.bmp"];
-caliQ = [5, 25, 50, 100, 175, 250, 500, 1000];
+orig_images = ["graph.bmp","gradient.bmp","explorer.bmp","pattern.bmp","noise.bmp","cshapes.bmp","color_lines.bmp","candados.bmp","lennon.bmp","lena.bmp","mandrill.bmp","x-ray.bmp"];
+caliQ = [5, 25, 50, 100, 200, 400, 750, 1000];
 
 % Matrices to store the experimental data
 % One for each parameter (MSE,RC,SNR,SSIM) and mode (DFLT,CUSTOM)

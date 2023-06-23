@@ -69,7 +69,7 @@ for img_idx = 1:num_images
         % Compress the image
         jcom_custom(fname, caliQ_val);
         % Decompress the image
-        c_fname = fullfile(enc_custom_filepath, strcat(basename, '_Q', num2str(caliQ_val), '_enc_custom.hud'));
+        c_fname = fullfile(enc_custom_filepath, strcat(basename, '_Q', num2str(caliQ_val), '_enc_custom.huc'));
         [MSE_C, RC_C, SNR_C, SSIM_C] = jdes_custom(c_fname, false);
         % Total CPU time
         t_total = cputime - t_ini;

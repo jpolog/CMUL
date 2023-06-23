@@ -4,12 +4,12 @@ function RC = jcom_dflt(fname, caliQ)
 % Inputs:
 %   fname: String containing the file name, including suffix
 %          Accepts BMP and JPEG, indexed and truecolor
-%   caliQ: Quality factor (positive integer >= 1)
-%               1: standard quality
-%               >1: lower quality
-%   extension: String indicating the file extension, e.g., bmp or png
+%   caliQ: Quality factor
+%
 % Outputs:
 %   RC: Compression ratio
+%
+% Author:  Javier Polo Gambin - PCEO
 
 % Verbosity flag
 vflag = 1;

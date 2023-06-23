@@ -1,13 +1,10 @@
 function RC = jcom_custom(fname, caliQ)
-% jcom_custom: Image compression based on customized Huffman tables
+% jcom_custom: Image compression based on custom Huffman tables
 %
 % Inputs:
 %   fname: File name string, including suffix
 %          Supports BMP and JPEG, indexed and truecolor
-%   caliQ: Quality factor (positive integer >= 1)
-%          1: standard quality
-%          >1: lower quality
-%   extension: String indicating the file extension (e.g., bmp or png)
+%   caliQ: Quality factor
 %
 % Outputs:
 %   RC: Compression ratio
@@ -22,12 +19,11 @@ if vflag
     fprintf('Comprimiendo %s usando tablas Huffman Custom...\n\n', fname);
 end
 
-
-% Encoded images will be sotred here
+% Encoded images will be stred here
 enc_filepath = '../Images/encoded_custom/';  
-% Generate compressed file name (.hud extension)
+% Generate compressed file name (.huc extension)
 [~, basename, ~] = fileparts(fname);
-encoded_file = strcat(enc_filepath, basename,'_Q',num2str(caliQ),'_enc_custom.hud');
+encoded_file = strcat(enc_filepath, basename,'_Q',num2str(caliQ),'_enc_custom.huc');
 
 % Get initial CPU time
 t_ini = cputime;

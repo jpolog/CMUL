@@ -3,7 +3,6 @@ function [MSE, RC, SNR, SSIM] = jdes_custom(fname, show)
 %
 % Inputs:
 %   fname: String containing the file name, including suffix
-%   extension: String indicating the file extension, e.g., bmp or png
 %   show: Flag to indicate whether to display the images (optional)
 % Outputs:
 %   MSE: Mean Squared Error between the original and reconstructed images
@@ -17,12 +16,6 @@ function [MSE, RC, SNR, SSIM] = jdes_custom(fname, show)
 orig_filepath = '../Images/original/'; 
 dec_filepath = '../Images/decoded_custom/';
 
-% Open the compressed file
-[~, name, ~] = fileparts(fname);
-tmp = strsplit(name, "_Q");
-basename = tmp(1); % used to open original file + generate decompressed file
-enc_fid = fopen(fname, 'r');
-
 % Verbosity flag
 vflag = 1;
 if vflag
@@ -30,6 +23,12 @@ if vflag
     fprintf('Funcion djes_custom:\n');
     fprintf('Descomprimiendo %s usando tablas Huffman Custom...\n', fname);
 end
+
+% Open the compressed file
+[~, name, ~] = fileparts(fname);
+tmp = strsplit(name, "_Q");
+basename = tmp(1); % used to open original file + generate decompressed file
+enc_fid = fopen(fname, 'r');
 
 % Read the parameters of the original image
 params = fread(enc_fid, 5, 'uint32');
@@ -58,7 +57,7 @@ BITS_C_AC = double(fread(enc_fid, len_BITS_C_AC, 'uint32'));
 len_HUFFVAL_C_AC = double(fread(enc_fid, 1, 'uint32'));
 HUFFVAL_C_AC = double(fread(enc_fid, len_HUFFVAL_C_AC, 'uint32'));
 
-% Read the 3 compressed channels
+% Read the 3 compressed scans
 % CodedY
 len_sbytes_Y = fread(enc_fid, 1, 'uint32');
 sbytes_Y = fread(enc_fid, len_sbytes_Y, 'uint32');
@@ -123,7 +122,7 @@ header_len = 4 * 5 + (1 + len_BITS_Y_DC) * 4 + (1 + len_HUFFVAL_Y_DC) * 4 ...
 data_len = sum([len_sbytes_Y, len_sbytes_Cb, len_sbytes_Cr]);
 TC = header_len + data_len;
 
-% Open the original image
+% Read the original image
 orig_file = strcat(orig_filepath, basename, '.bmp');
 [Xorig, ~, ~, ~, ~, ~, ~, TO] = imlee(orig_file);
 
@@ -133,7 +132,7 @@ orig_file = strcat(orig_filepath, basename, '.bmp');
 MSE = mean((double(Xrec) - double(Xorig)).^2, [1 2 3]);
 
 % Calculate Compression Ratio (RC)
-RC = 100 * (TO - TC) / TO;
+RC =((TO - TC)/TO)*100;
 
 % Calculate SNR (Signal-to-Noise Ratio)
 SNR = 10 * log10(sum(double(Xorig).^2, [1 2 3]) / sum((double(Xrec) - double(Xorig)).^2, [1 2 3]));

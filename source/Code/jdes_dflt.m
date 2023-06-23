@@ -1,10 +1,9 @@
-function [MSE, RC, SNR, SSIM] = jdes_dflt(fname, show)
+function [MSE, RC, SNR, SSIM] = jdes_dflt(fname, showRes)
 % Function: jdes_dflt (Default Huffman table decompression)
 %
 % Inputs:
 %   fname: String containing the file name, including suffix
-%   extension: String indicating the file extension, e.g., bmp or png
-%   show: Flag to indicate whether to display the images (optional)
+%   showRes: Flag to indicate whether to display the images (optional)
 % Outputs:
 %   MSE: Mean Squared Error between the original and reconstructed images
 %   RC: Compression ratio
@@ -17,12 +16,6 @@ function [MSE, RC, SNR, SSIM] = jdes_dflt(fname, show)
 orig_filepath = '../Images/original/'; 
 dec_filepath = '../Images/decoded_dflt/';
 
-% Open the compressed file
-[~, name, ~] = fileparts(fname);
-tmp = strsplit(name, "_Q");
-basename = tmp(1); % used to open original file + generate decompressed file
-enc_fid = fopen(fname, 'r');
-
 % Verbosity flag
 vflag = 1;
 if vflag
@@ -31,14 +24,23 @@ if vflag
     fprintf('Descomprimiendo %s usando tablas Huffman Default...\n', fname);
 end
 
+% Open the compressed file
+[~, name, ~] = fileparts(fname);
+tmp = strsplit(name, "_Q");
+basename = tmp(1); % used to open original file + generate decompressed file
+enc_fid = fopen(fname, 'r');
+
 % Read the parameters of the original image
 params = fread(enc_fid, 5, 'uint32');
 [m, n, mamp, namp, caliQ] = deal(params(1),params(2),params(3),params(4),params(5));
 
 % CodedY
+% how many bytes to read
 len_sbytes_Y = fread(enc_fid, 1, 'uint32');
+% read the data
 sbytes_Y = fread(enc_fid, len_sbytes_Y, 'uint32');
 ultl_Y = fread(enc_fid, 1, 'uint32');
+% coded scan in bits
 CodedY = bytes2bits(double(sbytes_Y), double(ultl_Y));
 
 % CodedCb
@@ -68,8 +70,8 @@ Xlabrec = invscan(XScanrec);
 Xtransrec = desquantmat(Xlabrec, caliQ);
 
 % Perform 2D inverse DCT on 8x8 pixel blocks
-% Reconstructs an extended size YCbCr image
 Xamprec = imidct(Xtransrec, m, n);
+% Xamprec is an extended size YCbCr image
 
 % Convert to RGB color space
 % Obs: When using ycbcr2rgb
@@ -93,7 +95,7 @@ imwrite(Xrec, dec_file);
 
 % Calculate sizes and compression ratio
 % header_len=length(n)+length(namp)+length(m)+length(mamp)+length(caliQ);
-header_len = 4 * 5; % Optimized calculation (5 parameters * 4 bytes each)
+header_len = 5 * 4; % Optimized calculation (5 parameters * 4 bytes each)
 data_len = sum([len_sbytes_Y, len_sbytes_Cb, len_sbytes_Cr]);
 TC = header_len + data_len;
 
@@ -107,7 +109,7 @@ orig_file = strcat(orig_filepath, basename, '.bmp');
 MSE = mean((double(Xrec) - double(Xorig)).^2, [1 2 3]);
 
 % Calculate RC (Compression ratio)
-RC = 100 * (TO - TC) / TO;
+RC =((TO - TC)/TO)*100;
 
 % Calculate SNR (Signal-to-Noise Ratio)
 SNR = 10 * log10(sum(double(Xorig).^2, [1 2 3]) / sum((double(Xrec) - double(Xorig)).^2, [1 2 3]));
@@ -120,10 +122,10 @@ SSIM = ssim(Xrec,Xorig);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Don't show images by default
 if nargin < 2
-    show = false;
+    showRes = false;
 end
 
-if show
+if showRes
     figure('Name', 'Imagen Original');
     imshow(Xorig);
     figure('Name', 'Imagen Reconstruida');

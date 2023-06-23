@@ -31,8 +31,7 @@ t_ini = cputime;
 %%%%%%%%%%%%%%%%%%%
 % Read image file %
 %%%%%%%%%%%%%%%%%%%
-% Convert to YCbCr color space
-% Expand dimensions to multiples of 8
+% Convert to YCbCr color space and expand dimensions to multiples of 8
 [~, Xamp, ~, m, n, mamp, namp, TO] = imlee(fname);
 
 
@@ -49,8 +48,7 @@ Xlab = quantmat(Xtrans, caliQ);
 %%%%%%%%%%%%%%%%%%%%%%
 % Scanning & Encoding%
 %%%%%%%%%%%%%%%%%%%%%%
-% Scan each component (Y,Cb,Cr) separately and reorder each block in zigzag
-% (each scan is an mamp x namp matrix)
+% Scans each component (Y,Cb,Cr) separately and reorders each block in zigzag
 XScan = scan(Xlab);
 
 % Encode the three scans using default Huffman tables
@@ -111,26 +109,26 @@ fwrite(fid, ultl_Cr, 'uint32');
 fclose(fid);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Calculate Compression Rate (RC) %
+% Calculate Compression ratio (RC) %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Header length %%%
 % header_len=length(n)+length(namp)+length(m)+length(mamp)+length(caliQ);
 header_len = 4 * 5; % Size of five uint32 variables (optimized)
 data_len = length(sbytes_Y) + length(sbytes_Cb) + length(sbytes_Cr);
 TC = header_len + data_len;
-RC = 100 * ((TO - TC) / TO);
+RC =((TO - TC)/TO)*100;
 
 % Total time
 t_total = cputime - t_ini;
 
 %%%%%%% Display information %%%%%%%
 if vflag
-    fprintf('Tiempo total CPU: %s\n', t_total);
     fprintf('Fichero comprimido generado: %s \n', encoded_file);
     fprintf('Tamaño original: %d \n', TO);
     fprintf('Tamaño comprimido: %d \n', TC);
     fprintf('RC = %f \n', RC);
     fprintf('Terminado jcom_dflt\n');
+    fprintf('Tiempo total CPU: %s\n', t_total);
     fprintf('--------------------------------------------------\n');
 end
 

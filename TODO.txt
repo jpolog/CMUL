@@ -1,46 +1,10 @@
-jdes_custom & jdes_dflt:
-    + al LEER del fichero comprimido, se tiene que leer como double()? o se lee normal??
-    + Alomejor aquí si que hay que distinguir entre lo que leemos normal y el double REVISAR CÁLCULOS DEL HEADER
-    + Revisar el cálculo de MSE
-    + Revisar lo que se muestra
-    + Cambiar LEN_ por len_
-
-Cambiar variable fid del fichero por fich o algo así
-Reordenar m,n,mamp,namp al leer y al escribir
-
-
-Decompress:
-    + Arreglar el número de argumentos y si sirve para algo demás del nombre
-
-
-Obs: lab = Label
-
-CAMBIAR DECOMPRESS POR DECODE????? (CREO QUE NO)!!!!!
-
-Cambiar los nombres de las imágenes para que sean todas en inglés o en español
-
-RC se traduce como Compression Ratio??
-
-Meter vflag como argumento??
-
-En encodeScans_custom los componentes están codificados EN BINARIO??
-
-DecodeScans --> Los escaneos se han decodificado??
-
-Meter imagen de un partido de fútbol  porque tiene zonas del mismo color, es un ejemplo común, se tiene que ver bien la pelota/los jugadores, etc.
-
-Comparar compression time for when real-time performance is a crucial requirement.
-
-Bitrate: Calculate the bitrate for each algorithm, which is the average number of bits required to encode each pixel of the compressed image. Lower bitrates indicate more efficient compression. Compare the bitrates obtained by both algorithms to evaluate their efficiency.
-
-Citar algún artículo con SSIM
-
 SSIM en este caso nos da el mismo resultado para los dos compresores porque el resultado visual (la cantidad de componentes de la transformada DCT que se conservan) está determinado por caliQ, que en cada paso es igual en ambos (solo difiere la CODIFICACIÓN). Por esta razón lo usamos como medida para validar nuestro análisis subjetivo (a partir de un cierto valor lo consideraremos bueno CITAR GUIA SSIM Y LOS VALORES).  
 
 Borrar cosas que sobran de las funciones auxiliares
 
-revisar cada vez que digo tasa de compresión a ver si está bien o es ratio o algo así.
 
-Quitar que se parecen los resultados de los dos compresores!!
 
 cambiar color_shapes a 200 diciendo que es pequeño y total no se ve tanto
+
+Decir cuánto dura una ejecución completa
+TIEMPO TOTAL DEL PROGRAMA DE PRUEBAS: 28 min, 9 seg

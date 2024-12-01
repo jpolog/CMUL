@@ -20,7 +20,7 @@ enc_dflt_filepath = '../Images/encoded_dflt/';
 enc_custom_filepath = '../Images/encoded_custom/';  
 
 % Define the list of images and caliQ factor
-orig_images = ["graph.bmp","gradient.bmp","explorer.bmp","pattern.bmp","noise.bmp","cshapes.bmp","color_lines.bmp","candados.bmp","lennon.bmp","lena.bmp","mandrill.bmp","x-ray.bmp"];
+orig_images = ["gradient.bmp","explorer.bmp","pattern.bmp","noise.bmp","cshapes.bmp","color_bars.bmp","candados.bmp","lennon.bmp","lena.bmp","mandrill.bmp","x-ray.bmp"];
 caliQ = [5, 25, 50, 100, 200, 400, 750, 1000];
 
 % Matrices to store the experimental data
@@ -95,16 +95,6 @@ for img_idx = 1:num_images
     dlmwrite(fullfile(img_data_folder, strcat(basename, '_default.csv')), img_DFLT, 'delimiter', ';');
     dlmwrite(fullfile(img_data_folder, strcat(basename, '_custom.csv')), img_CUSTOM, 'delimiter', ';');
 end
-
-% write all data to files
-dlmwrite(fullfile(data_filepath, 'MSE_default.csv'), MSE_DFLT, 'delimiter', ';');
-dlmwrite(fullfile(data_filepath, 'MSE_custom.csv'), MSE_CUSTOM, 'delimiter', ';');
-dlmwrite(fullfile(data_filepath, 'RC_default.csv'), RC_DFLT, 'delimiter', ';');
-dlmwrite(fullfile(data_filepath, 'RC_custom.csv'), RC_CUSTOM, 'delimiter', ';');
-dlmwrite(fullfile(data_filepath, 'SNR_default.csv'), SNR_DFLT, 'delimiter', ';');
-dlmwrite(fullfile(data_filepath, 'SNR_custom.csv'), SNR_CUSTOM, 'delimiter', ';');
-dlmwrite(fullfile(data_filepath, 'SSIM_default.csv'), SSIM_DFLT, 'delimiter', ';');
-dlmwrite(fullfile(data_filepath, 'SSIM_custom.csv'), SSIM_CUSTOM, 'delimiter', ';');
 
 % total time
 t_total = cputime - t_global_ini;
